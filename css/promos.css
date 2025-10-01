@@ -1,0 +1,254 @@
+/* ------------------------------------------------*/
+/* 1. PROMOCIÓN HERO (Black Friday Banner)         */
+/* ------------------------------------------------*/
+.promo-hero {
+    height: 600px; 
+    background: #EAF7FF; 
+    padding: 0; 
+    display: flex;
+    align-items: stretch; 
+}
+
+.hero-flex-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%; 
+    height: 100%;
+}
+
+
+/* LADO IZQUIERDO: CONTENIDO (TEXTO Y BOTÓN)       */
+.hero-content-left {
+    flex: 1.2; 
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+.hero-content-left h2 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #58655F; 
+}
+
+.hero-content-left p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+
+/* LADO DERECHO: IMAGEN ----------------  */
+.hero-image-right {
+    flex: 1;
+    overflow: hidden;
+}
+
+.hero-image-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* -- Ajuste Responsive -- */
+@media (max-width: 768px) {
+    .hero-flex-container {
+        flex-direction: column; 
+    }
+
+    .hero-content-left {
+        flex: auto;
+        text-align: center; 
+        padding: 40px 20px;
+    }
+    
+    .hero-image-right {
+        flex: auto;
+        height: 250px; 
+    }
+}
+
+.promo-hero .btn-primary {
+    display: inline-block; 
+    text-align: center;
+    
+    /* Estilos de Color y Forma (Basados en tu paleta) */
+    background: #EFCEEA; 
+    color: #333;
+    
+    /* Reducir el padding para hacerlo menos ancho */
+    padding: 10px 20px; 
+    
+    /* Estilos de tipografía y efectos */
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    transition: background 0.3s ease;
+}
+
+.promo-hero .btn-primary:hover {
+    background: #e6c56b; 
+}
+
+
+
+/* ------------------------------------------------*/
+/* 2. OFERTA DESTACADA INDIVIDUAL                  */
+/* ------------------------------------------------*/
+.promo-destacada {
+    padding: 60px 20px;
+    text-align: center;
+    background: #fff; 
+}
+
+.promo-destacada h3 {
+    font-size: 2rem;
+    color: #58655F;
+    margin-bottom: 30px;
+}
+
+.destacada-card {
+    display: flex;
+    max-width: 900px;
+    margin: 0 auto;
+    background: #EFCEEA; 
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.destacada-image {
+    flex: 1;
+    max-width: 50%;
+    overflow: hidden;
+}
+
+.destacada-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.destacada-info {
+    flex: 1;
+    padding: 40px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.destacada-info h4 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Estilos de Precio */
+.price-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.price-old {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 1.2rem;
+}
+
+.price-new {
+    color: #FF577F; 
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+
+/* ------------------------------------------------*/
+/* 3. PROMOS ESCONDIDAS (Grid de 3 Productos)       */
+/* ------------------------------------------------*/
+.promo-escondida {
+    padding: 60px 20px;
+    text-align: center;
+    background: #EAF7FF; 
+}
+
+.promo-escondida h3 {
+    font-size: 2rem;
+    color: #58655F;
+    margin-bottom: 10px;
+}
+
+.escondida-text {
+    font-style: italic;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.product-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.product-card h4 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+
+/* ------------------------------------------------*/
+/* 4. AJUSTES RESPONSIVE                           */
+/* ------------------------------------------------*/
+@media (max-width: 768px) {
+    /* Banner */
+    .promo-hero h2 {
+        font-size: 2.2rem;
+    }
+
+    /* Oferta Destacada (cambia a columna) */
+    .destacada-card {
+        flex-direction: column;
+        max-width: 400px;
+    }
+
+    .destacada-image {
+        max-width: 100%;
+        height: 250px;
+    }
+    
+    .destacada-info {
+        padding: 25px;
+        text-align: center;
+    }
+
+    /* Promos Escondidas (cambia a una columna) */
+    .productos-grid {
+        grid-template-columns: 1fr;
+    }
+}
