@@ -1,0 +1,135 @@
+/* ------------------------------------------------*/
+/* 1. HERO Y FONDO CON IMAGEN                      */
+/* ------------------------------------------------*/
+.contact-hero {
+    /* Define tu imagen de fondo aquí */
+    background: url('../img/contactanos.jpg') no-repeat center center/cover;
+    background-size: cover;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 800px;
+}
+
+.contact-overlay {
+    /* Fondo semitransparente para que el texto sea legible */
+    background: rgba(255, 255, 255, 0.228); 
+    padding: 40px 0;
+    width: 100%;
+    min-height: inherit;
+}
+
+.contact-container {
+    display: flex;
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ------------------------------------------------*/
+/* 2. LADO IZQUIERDO: FORMULARIO                   */
+/* ------------------------------------------------*/
+.contact-form-side {
+    flex: 1.5;
+}
+
+.contact-form-side h1 {
+    font-size: 2.5rem;
+    color: #58655F;
+    margin-bottom: 10px;
+}
+
+.contact-form-side p {
+    margin-bottom: 30px;
+    color: #555;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; 
+    background: #fff;
+    color: #333;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #EFCEEA; 
+    outline: none;
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+/* Reutilizamos el estilo del botón global, solo ajustamos el ancho */
+.contact-form .btn-primary {
+    width: auto; 
+    padding: 12px 30px; 
+}
+
+/* ------------------------------------------------*/
+/* 3. LADO DERECHO: INFORMACIÓN                    */
+/* ------------------------------------------------*/
+.contact-info-side {
+    flex: 1;
+    padding: 20px;
+    background: #EFCEEA; 
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info-side .intro-text {
+    font-style: italic;
+    margin-bottom: 30px;
+    color: #58655F;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.info-icon {
+    font-size: 1.8rem;
+    margin-right: 15px;
+    color: #58655F; 
+}
+
+.info-item h4 {
+    font-size: 1.1rem;
+    color: #333;
+    margin: 0;
+}
+
+.info-item p {
+    font-size: 1rem;
+    color: #555;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* ------------------------------------------------*/
+/* 4. RESPONSIVE                                  */
+/* ------------------------------------------------*/
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
+    }
+    
+    .contact-form-side,
+    .contact-info-side {
+        flex: auto;
+    }
+
+    .contact-info-side {
+        margin-top: 20px;
+    }
+}
