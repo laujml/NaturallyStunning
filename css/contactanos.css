@@ -52,10 +52,10 @@
     padding: 12px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     box-sizing: border-box; 
     background: #fff;
-    color: #333;
+    color: #33333300;
 }
 
 .contact-form input:focus,
@@ -68,53 +68,67 @@
     resize: vertical;
 }
 
-/* Reutilizamos el estilo del botón global, solo ajustamos el ancho */
+
 .contact-form .btn-primary {
     width: auto; 
-    padding: 12px 30px; 
+    padding: 20px 110px; 
 }
 
 /* ------------------------------------------------*/
 /* 3. LADO DERECHO: INFORMACIÓN                    */
 /* ------------------------------------------------*/
-.contact-info-side {
-    flex: 1;
-    padding: 20px;
-    background: #EFCEEA; 
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.contact-info-side .intro-text {
-    font-style: italic;
-    margin-bottom: 30px;
-    color: #58655F;
-}
 
 .info-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 25px;
 }
 
 .info-icon {
     font-size: 1.8rem;
-    margin-right: 15px;
+    margin-right: 15px; 
     color: #58655F; 
 }
 
-.info-item h4 {
+.info-details {
+    display: flex;
+    flex-grow: 1; 
+    align-items: flex-start;
+}
+
+.info-details h4 {
+    flex-basis: 150px; 
+    min-width: 150px; 
     font-size: 1.1rem;
     color: #333;
     margin: 0;
+    font-weight: bold; 
 }
 
-.info-item p {
+.info-details p {
+    flex-grow: 1; 
     font-size: 1rem;
     color: #555;
     margin: 0;
     line-height: 1.4;
 }
+
+.contact-info-side { 
+    flex: 1; 
+    padding: 100px 40px; 
+    background: #EFCEEA; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+} 
+
+.contact-container { 
+    display: flex; 
+    max-width: 750px; 
+    margin: 0 auto; 
+    padding: 0 40px; 
+    justify-content: space-between; 
+}
+
 
 /* ------------------------------------------------*/
 /* 4. RESPONSIVE                                  */
