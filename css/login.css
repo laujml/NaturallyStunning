@@ -1,0 +1,234 @@
+/* ========================================
+   LOGIN.CSS - Naturally Stunning
+   ========================================
+   
+   Contenido:
+   1. Contenedor Principal - Centrado vertical/horizontal
+   2. Card de Login - Formulario principal
+   3. Campos de Formulario - Inputs y Labels
+   4. Botones - Login y Register
+   5. Elementos adicionales - Divider, Links
+   
+   NOTA: Usa principalmente estilos de global.css
+   ======================================== */
+
+/* ============================================
+   1. CONTENEDOR PRINCIPAL
+   ============================================ */
+.login-container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #EAF7FF 0%, #EFCEEA 50%, #FFB6D9 100%);
+}
+
+/* ============================================
+   2. CARD DE LOGIN
+   ============================================ */
+.login-card {
+    background: white;
+    padding: 50px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    width: 100%;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.login-header h1 {
+    font-size: 2rem;
+    color: #58655F;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.login-header p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* ============================================
+   3. FORMULARIO Y CAMPOS
+   ============================================ */
+.login-form {
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #58655F;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #EFCEEA;
+}
+
+/* ============================================
+   4. OPCIONES DEL FORMULARIO
+   ============================================ */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 0.85rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #666;
+}
+
+.remember-me input[type="checkbox"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.forgot-password {
+    color: #FF85B3;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: #FF577F;
+}
+
+/* ============================================
+   5. BOTONES
+   ============================================ */
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #EFCEEA 0%, #FFB6D9 100%);
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(239, 206, 234, 0.4);
+}
+
+.btn-login:hover {
+    background: linear-gradient(135deg, #FFB6D9 0%, #FF85B3 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 182, 217, 0.5);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+/* ============================================
+   6. DIVIDER
+   ============================================ */
+.login-divider {
+    text-align: center;
+    margin: 25px 0;
+    position: relative;
+}
+
+.login-divider::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: #e0e0e0;
+}
+
+.login-divider::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: #e0e0e0;
+}
+
+.login-divider span {
+    background: white;
+    padding: 0 15px;
+    color: #999;
+    font-size: 0.85rem;
+}
+
+/* ============================================
+   7. REGISTRO PROMPT
+   ============================================ */
+.register-prompt {
+    text-align: center;
+}
+
+.register-prompt p {
+    color: #666;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.btn-register {
+    display: inline-block;
+    padding: 12px 30px;
+    background: white;
+    color: #58655F;
+    border: 2px solid #EFCEEA;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-register:hover {
+    background: #EFCEEA;
+    color: #333;
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   8. RESPONSIVE
+   ============================================ */
+@media (max-width: 580px) {
+    .login-card {
+        padding: 40px 25px;
+    }
+
+    .login-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .form-options {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+}
