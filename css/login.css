@@ -21,7 +21,7 @@
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
-    background: linear-gradient(135deg, #EAF7FF 0%, #EFCEEA 50%, #FFB6D9 100%);
+    background: #EAF7FF;
 }
 
 /* ============================================
@@ -46,6 +46,8 @@
     color: #58655F;
     margin-bottom: 10px;
     font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 .login-header p {
@@ -126,7 +128,7 @@
 .btn-login {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, #EFCEEA 0%, #FFB6D9 100%);
+    background: #EFCEEA;
     color: #333;
     border: none;
     border-radius: 8px;
@@ -138,9 +140,9 @@
 }
 
 .btn-login:hover {
-    background: linear-gradient(135deg, #FFB6D9 0%, #FF85B3 100%);
+    background: #e6c56b;
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(255, 182, 217, 0.5);
+    box-shadow: 0 6px 15px rgba(230, 197, 107, 0.5);
 }
 
 .btn-login:active {
