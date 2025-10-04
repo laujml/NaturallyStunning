@@ -1,21 +1,36 @@
+/* ========================================
+   CARRITO.CSS - Naturally Stunning
+   ========================================
+   
+   Contenido:
+   1. Hero del Carrito
+   2. Layout Principal - Items + Summary
+   3. Items del Carrito
+   4. Resumen del Pedido
+   5. Responsive Design
+   ======================================== */
 
+/* ============================================
+   1. HERO DEL CARRITO
+   ============================================ */
 .carrito-hero {
-    background: linear-gradient(135deg, #EAF7FF 0%, #EFCEEA 50%, #FFB6D9 100%);
-    padding: 50px 20px;
+    background: #EAF7FF;
+    padding: 80px 20px;
     text-align: center;
     color: #58655F;
 }
 
 .carrito-hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+    font-size: 3rem;
+    margin-bottom: 15px;
     letter-spacing: 2px;
     font-weight: 300;
+    text-transform: uppercase;
 }
 
 .carrito-hero p {
-    font-size: 1rem;
-    opacity: 0.85;
+    font-size: 1.2rem;
+    opacity: 0.9;
 }
 
 /* ============================================
@@ -134,50 +149,7 @@
 }
 
 /* ============================================
-   4. ACCIONES DEL CARRITO
-   ============================================ */
-.carrito-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-    gap: 15px;
-}
-
-.btn-secondary {
-    padding: 12px 25px;
-    background: white;
-    color: #58655F;
-    border: 2px solid #EFCEEA;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-.btn-secondary:hover {
-    background: #EFCEEA;
-    color: #333;
-}
-
-.btn-clear {
-    padding: 12px 25px;
-    background: white;
-    color: #FF577F;
-    border: 2px solid #FF577F;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-clear:hover {
-    background: #FF577F;
-    color: white;
-}
-
-/* ============================================
-   5. RESUMEN DEL PEDIDO
+   4. RESUMEN DEL PEDIDO
    ============================================ */
 .carrito-summary {
     flex: 0 0 350px;
@@ -205,11 +177,6 @@
     font-size: 1rem;
 }
 
-.summary-line .discount {
-    color: #27ae60;
-    font-weight: 600;
-}
-
 .summary-divider {
     height: 2px;
     background: #f0f0f0;
@@ -226,54 +193,18 @@
 }
 
 .total-price {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     color: #FF577F;
+    font-weight: 700;
 }
 
 /* ============================================
-   6. FORMULARIO DE CUPÓN
-   ============================================ */
-.coupon-form {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.coupon-form input {
-    flex: 1;
-    padding: 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 0.9rem;
-}
-
-.coupon-form input:focus {
-    outline: none;
-    border-color: #EFCEEA;
-}
-
-.btn-coupon {
-    padding: 12px 20px;
-    background: #58655F;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.btn-coupon:hover {
-    background: #3d4740;
-}
-
-/* ============================================
-   7. BOTÓN DE CHECKOUT
+   5. BOTÓN DE CHECKOUT
    ============================================ */
 .btn-checkout {
     width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #EFCEEA 0%, #FFB6D9 100%);
+    padding: 16px;
+    background: #EFCEEA;
     color: #333;
     border: none;
     border-radius: 8px;
@@ -286,13 +217,13 @@
 }
 
 .btn-checkout:hover {
-    background: linear-gradient(135deg, #FFB6D9 0%, #FF85B3 100%);
+    background: #e6c56b;
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(255, 182, 217, 0.5);
+    box-shadow: 0 6px 15px rgba(230, 197, 107, 0.5);
 }
 
 /* ============================================
-   8. MÉTODOS DE PAGO
+   6. MÉTODOS DE PAGO
    ============================================ */
 .payment-methods {
     text-align: center;
@@ -314,81 +245,7 @@
 }
 
 /* ============================================
-   9. RECOMENDACIONES
-   ============================================ */
-.recomendaciones {
-    max-width: 1200px;
-    margin: 60px auto 40px;
-    padding: 0 20px;
-}
-
-.recomendaciones h2 {
-    color: #58655F;
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 35px;
-    font-weight: 400;
-}
-
-.recomendaciones-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-}
-
-.producto-recomendado {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.producto-recomendado:hover {
-    transform: translateY(-5px);
-}
-
-.producto-recomendado img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-.producto-recomendado h4 {
-    color: #58655F;
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-}
-
-.precio-recomendado {
-    color: #58655F;
-    font-size: 1.3rem;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 15px;
-}
-
-.btn-small {
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #EFCEEA 0%, #FFB6D9 100%);
-    color: #333;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-block;
-    transition: all 0.3s ease;
-}
-
-.btn-small:hover {
-    background: linear-gradient(135deg, #FFB6D9 0%, #FF85B3 100%);
-    transform: scale(1.05);
-}
-
-/* ============================================
-   10. RESPONSIVE DESIGN
+   7. RESPONSIVE DESIGN
    ============================================ */
 @media (max-width: 968px) {
     .carrito-container {
@@ -421,7 +278,7 @@
 
 @media (max-width: 580px) {
     .carrito-hero h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
 
     .carrito-item {
@@ -430,19 +287,5 @@
 
     .item-info h3 {
         font-size: 1rem;
-    }
-
-    .carrito-actions {
-        flex-direction: column;
-    }
-
-    .btn-secondary,
-    .btn-clear {
-        width: 100%;
-        text-align: center;
-    }
-
-    .recomendaciones-grid {
-        grid-template-columns: 1fr;
     }
 }
