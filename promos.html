@@ -9,27 +9,12 @@
 <body>
 
     <input type="checkbox" id="menu-toggle" style="display: none;">
-
     <aside id="sidebar" class="sidebar">
-        <ul>
-            <li><a href="profile.html">Mi cuenta</a></li>
-            <li><a href="productos.html">Productos</a></li>
-            <li><a href="promos.html">Promos</a></li>
-            <li><a href="contactanos.html">Contáctanos</a></li>
-            <li><a href="AcercadeNosotros.html">Acerca de</a></li>
-        </ul>
-    </aside>
-
-    <div id="content" class="content">
-        <header>
-            <div class="topbar">
-                <label for="menu-toggle" class="menu-btn icon">☰</label>
-                <div class="icons">
-                    <a href="carrito.html" class="icon">🛒</a>
-                    <a href="login.html" class="icon" id="profile-btn">👤</a>
-                </div>
-            </div>
-        </header>
+            </aside>
+    
+    <div id="content"> 
+        
+                <div id="topbar-placeholder"></div>
 
         <section class="promo-hero">
             <div class="hero-flex-container">
@@ -105,6 +90,11 @@
             <p>© 2025 Naturally Stunning - Todos los derechos reservados</p>
             <p>Creado por Laura Angel y Jorge FLores</p>
         </footer>
-    </div>
+
+    <script src="js/topbar_data.js"></script>
+    <script src="js/sidebar_data.js"></script> <script>
+        document.getElementById('topbar-placeholder').innerHTML = TOPBAR_HTML;
+        document.getElementById('sidebar').innerHTML = SIDEBAR_CONTENT;
+    </script>
 </body>
 </html>
