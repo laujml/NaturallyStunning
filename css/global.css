@@ -12,10 +12,19 @@ box-sizing: border-box;
 
 /* -- Body: Estilos base de tipografía y fondo -- */
 body {
-    font-family: Arial, sans-serif;
+    font-family:  'Montserrat', sans-serif;
 background: #fdfdfd; 
-color: #333; 
+color: #202020; 
  overflow-x: hidden; 
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 900; /* Semibold para que resalten */
+}
+
+.hero h1 {
+    font-weight: 1000; 
 }
 
 /* ------------------------------------------------*/
@@ -235,7 +244,7 @@ body {
 /* -- footer: Estilo general del pie de página -- */
 footer {
     background: #EFCEEA; 
-    color: #fff;
+    color: #939393;
     text-align: center;
     padding: 15px;
     margin-top: 30px;

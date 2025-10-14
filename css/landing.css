@@ -11,7 +11,7 @@
     padding: 120px 20px; 
     background: url("../img/landing1.jpg") no-repeat center center/cover; 
     color: #fff; 
-    min-height: 100vh; 
+    min-height: 90vh; 
     display: flex;
     flex-direction: column;
     justify-content: center; 
@@ -27,7 +27,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(124, 188, 230, 0.458); 
+    background: rgba(124, 188, 230, 0.687); 
     z-index: -1; 
 }
 
@@ -52,6 +52,8 @@
     margin-bottom: 0; 
 }
 
+
+
 /* ------------------------------------------------*/
 /* 2. AJUSTES RESPONSIVE                           */
 /* ------------------------------------------------*/
@@ -62,13 +64,31 @@
         font-size: 2rem;
     }
     
-    /* Ajuste de Best Sellers Layout */
+     /* AJUSTE DE BEST SELLERS  */
     .products {
-        grid-template-columns: 1fr;
+        flex-wrap: wrap; 
+        justify-content: space-between; 
+        max-width: 100%;
+        margin: 20px 0;
+        padding: 0 10px;
+        gap: 0; 
     }
     
-    .best-sellers {
-        padding: 30px 15px;
+    .product {
+        flex: 0 0 calc(50% - 10px); 
+        height: auto; 
+        margin-bottom: 20px;
+    }
+    
+    .product .product-info {
+        padding: 5px; 
+    }
+
+    .product .product-info .product-title {
+        font-size: 0.85rem; 
+    }
+    .product .product-info .product-price {
+        font-size: 0.75rem;
     }
 
     /* Ajuste de About Section */
@@ -108,77 +128,94 @@
 /* -- .best-sellers: Contenedor principal -- */
 .best-sellers {
     text-align: center;
-    padding: 40px 20px;
+    padding: 100px 90px;
 }
 
 /* -- .best-sellers h2: Título de la sección -- */
 .best-sellers h2 {
+    font-size: 2.5rem;
     margin-bottom: 20px;
+    color: #333;
 }
 
 /* -- .products: Contenedor de la cuadrícula de productos -- */
 .products {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); 
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;  
+    overflow-x: auto;  
     gap: 20px;
-    margin-top: 20px;
-    max-width: 900px; 
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 1200px; 
+    margin: 20px auto;
+    padding: 0 20px; 
 }
 
 /* -- .product: Tarjeta de Producto individual -- */
 .product {
-    height: 300px;
+    flex: 0 0 calc(25% - 15px); 
+    height: 300px; 
     position: relative;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end; 
-    padding: 20px;
-    color: #fff;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    display: flex; 
+    flex-direction: row; 
+    text-decoration: none; 
+    color: #333; 
+    background: white; 
     border-radius: 10px;
-    transition: all 0.3s ease-in-out;
-}
-
-/* Capa blanca transparente para legibilidad */
-.product::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.5); 
-    z-index: 1; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
     transition: all 0.3s ease-in-out; 
 }
 
+.product-image {
+    flex: 2; 
+    height: 100%;
+    background-size: cover; 
+    background-position: center;
+}
+
+.product-info {
+    flex: 1; 
+    background: #EFCEEA; 
+    height: 100%;
+    
+    /* Centrar texto verticalmente */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+}
+
+/* -- .product-title (h3 dentro del .product-info) -- */
+.product-info .product-title {
+    color: #333;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
 /* Aplicar imagen de fondo  */
-.product-1 {
+.product-1 .product-image {
     background: url("../img/productos/1.png") no-repeat center center/cover;
 }
-.product-2 {
+.product-2 .product-image{
     background: url("../img/productos/2.png") no-repeat center center/cover;
 }
-.product-3 {
+.product-3 .product-image{
     background: url("../img/productos/3.png") no-repeat center center/cover;
 }
-.product-4 {
+.product-4 .product-image{
     background: url("../img/productos/4.png") no-repeat center center/cover;
 }
+
 
 /* --- ESTILOS DE HOVER (Animación y Color) --- */
 /*   Animación del Recuadro */
 .product:hover {
-    transform: translateY(-5px); 
+    transform: translateY(-5px) translateX(5px); 
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); 
-}
-
-/*   Cambio de Color de la Capa a Amarillo Pastel */
-.product:hover::before {
-    background: rgba(250, 222, 141, 0.7); 
 }
 
 /* --- ESTILOS DEL TEXTO DENTRO DEL PRODUCTO --- */
@@ -209,18 +246,17 @@
 /* 4. SECCIÓN QUIÉNES SOMOS                       */
 /* ------------------------------------------------*/
 .about {
-    background: rgba(124, 188, 230, 0.458); 
+    background: #c8b46c; 
     padding: 0; 
-    min-height: 650px; 
     display: flex;
-    align-items: center;
+    align-items: stretch;
 }
 
 .about-flex-container {
     display: flex;
     flex-direction: row; 
     align-items: stretch;
-    margin: 0; /* ¡CLAVE CORREGIDA! Elimina el auto-margin */
+    margin: 0; 
     width: 100%; 
     height: 100%; 
 }
@@ -249,14 +285,14 @@
 .about-content h2 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: #333;
+    color: #ffffff;
 }
 
 .about-content p {
     font-size: 1.1rem;
     line-height: 1.7;
     margin-bottom: 2rem;
-    color: #555;
+    color: #ffffff;
 }
 
 .about-content .btn {
