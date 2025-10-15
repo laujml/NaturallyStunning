@@ -1,12 +1,12 @@
-/* ------------------------------------------------*/
-/* 1. PAGE HERO (Título de la Página)             */
-/* ------------------------------------------------*/
+/* ---------------------------------------------------------------
+   1. HERO SECTION (Título y Fondo)
+----------------------------------------------------------------*/
 .page-hero {
-    min-height: 350px;
+    min-height: 400px;
     position: relative;
-    background: url('../img/acerca.jpg') no-repeat center center/cover; 
-    color: #333; 
-    padding: 60px 20px;
+    background: url('../img/acerca.jpg') no-repeat center center/cover;
+    color: #fff;
+    padding: 80px 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -15,123 +15,153 @@
     z-index: 1;
 }
 
-/* -- .page-hero::before: Capa de color/opacidad sobre la imagen -- */
+/* Capa con degradado pastel */
 .page-hero::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(124, 188, 230, 0.458); 
+    inset: 0;
+    background: linear-gradient(
+        rgba(250, 222, 141, 0.6)
+    );
     z-index: -1;
 }
 
 .page-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
     font-size: 3.5rem;
-    color: #ffffff;
+    color: #fff;
     margin-bottom: 15px;
-    z-index: 2;
-    position:relative ;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
 }
 
 .page-hero p {
-    font-size: 1.2rem;
-    color: #ffffff;
-    z-index: 2;
-    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    color: #fff;
+    opacity: 0.95;
 }
 
-/* ------------------------------------------------*/
-/* 2. TEAM SECTION (Grilla de Perfiles)           */
-/* ------------------------------------------------*/
+/* ---------------------------------------------------------------
+   2. TEAM SECTION (Introducción y Tarjetas)
+----------------------------------------------------------------*/
 .team-section {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 20px;
-}
-
-/* Estilo para el bloque de texto superior (Creative Directors) */
-.team-intro {
-    text-align: left;
-    margin-bottom: 40px;
+    background: #fff7f3;
+    padding: 60px 20px;
+    text-align: center;
+    box-shadow: none;
+    border-radius: 0;
 }
 
 .team-intro h2 {
-    font-size: 2.5rem;
-    color: #58655F; 
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    color: #58655F;
     margin-bottom: 15px;
+    text-align: center;
 }
 
 .team-intro p {
+    font-family: 'Montserrat', sans-serif;
     max-width: 700px;
-    line-height: 1.6;
+    margin: 0 auto;
+    line-height: 1.7;
+    color: #444;
+    text-align: center;
 }
 
-/* Contenedor Flex para los perfiles */
+/* Grilla de miembros */
 .team-grid {
     display: flex;
-    justify-content: space-around;
-    gap: 30px;
-    flex-wrap: wrap; 
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 50px;
+    margin-top: 100px; 
 }
 
+/* Tarjeta de miembro (con efecto de aparición) */
 .team-member {
-    flex: 1; 
-    min-width: 280px;
+    width: 270px;
+    background: #f7e7f2;
+    border-radius: 18px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    position: relative;
+    padding: 85px 25px 25px; 
     text-align: center;
-    padding: 20px;
-    background: #EFCEEA; 
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: default;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
 }
 
+.team-member:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Foto de miembro (el círculo que sobresale) */
 .member-photo {
     width: 150px;
     height: 150px;
-    margin: 0 auto 15px auto;
-    border-radius: 50%; 
+    position: absolute;
+    top: -75px; 
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    border-radius: 50%;
     overflow: hidden;
     border: 4px solid #FADE8D;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .member-photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
 }
 
 .member-name {
-    font-size: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
     color: #333;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 6px;
 }
 
 .member-role {
+    font-family: 'Montserrat', sans-serif;
     color: #58655F;
     font-weight: 600;
+    font-size: 0.95rem;
 }
 
-/* ------------------------------------------------*/
-/* 3. AJUSTES RESPONSIVE                           */
-/* ------------------------------------------------*/
+/* Keyframes para la animación de aparición */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------------------------------------------------------------
+   3. RESPONSIVE
+----------------------------------------------------------------*/
 @media (max-width: 768px) {
     .page-hero h1 {
         font-size: 2.5rem;
     }
-    
-    .team-intro {
-        text-align: center;
-        padding: 0 15px;
+
+    .team-intro h2 {
+        font-size: 2rem;
     }
 
     .team-grid {
-        justify-content: center; 
+        gap: 30px;
+        margin-top: 100px; /* Mantener el margen superior también en móvil */
     }
 
     .team-member {
-        flex: 1 1 90%; 
-        margin-bottom: 20px;
+        width: 85%;
+        padding: 85px 25px 25px;
     }
 }
