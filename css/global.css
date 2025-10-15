@@ -23,6 +23,12 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 900; /* Semibold para que resalten */
 }
 
+p {
+    font-family: 'Montserrat', sans-serif; 
+    line-height: 1.6; /* Mejora la legibilidad */
+    /* Puedes añadir más estilos de color/tamaño aquí si es necesario */
+}
+
 .hero h1 {
     font-weight: 1000; 
 }
@@ -250,6 +256,12 @@ footer {
     margin-top: 30px;
 }
 
+body {
+    background-color: #f3e8d7; 
+    margin: 0;
+    padding: 0;
+}
+
 
 /* ------------------------------------------------*/
 /* 7. BOTONES GENÉRICOS (Globales)                */
@@ -261,7 +273,8 @@ footer {
     color: #333; 
     border-radius: 5px;
     text-decoration: none;
-    transition: 0.3s; 
+    transition: 0.3s;
+    font-family: 'Montserrat', sans-serif;  
 }
 
 /* -- .btn:hover: Efecto de hover del botón principal -- */

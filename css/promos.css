@@ -3,7 +3,7 @@
 /* ------------------------------------------------*/
 .promo-hero {
     height: 600px; 
-    background: #EAF7FF; 
+    background: #c8b46c;; 
     padding: 0; 
     display: flex;
     align-items: stretch; 
@@ -20,7 +20,7 @@
 /* LADO IZQUIERDO: CONTENIDO (TEXTO Y BOTÓN)       */
 .hero-content-left {
     flex: 1.2; 
-    padding: 60px 40px;
+    padding: 80px 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -28,16 +28,23 @@
 }
 
 .hero-content-left h2 {
-    font-size: 3rem;
+    font-size: 2rem;
     margin-bottom: 15px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #58655F; 
+    color: #ffffff; 
 }
 
 .hero-content-left p {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-bottom: 30px;
+    color: #ffffff;
+}
+
+.promo-hero .btn {
+    display: block; 
+    width: fit-content; 
+    margin: 30px auto 0 auto; 
 }
 
 
@@ -73,29 +80,6 @@
     }
 }
 
-.promo-hero .btn-primary {
-    display: inline-block; 
-    text-align: center;
-    
-    /* Estilos de Color y Forma (Basados en tu paleta) */
-    background: #EFCEEA; 
-    color: #333;
-    
-    /* Reducir el padding para hacerlo menos ancho */
-    padding: 10px 20px; 
-    
-    /* Estilos de tipografía y efectos */
-    font-weight: 600;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 5px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-    transition: background 0.3s ease;
-}
-
-.promo-hero .btn-primary:hover {
-    background: #e6c56b; 
-}
 
 
 

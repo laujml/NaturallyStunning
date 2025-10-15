@@ -1,149 +1,233 @@
-/* ------------------------------------------------*/
-/* 1. HERO Y FONDO CON IMAGEN                      */
-/* ------------------------------------------------*/
+/*--------------------------------------------------------------------
+  CONTACTANOS.CSS
+  Estructura y diseño para la página de contacto.
+--------------------------------------------------------------------*/
+
+/* --------------------------------------------------------------------
+   1. HERO Y FONDO CON IMAGEN (contact-hero, contact-overlay, title-block)
+----------------------------------------------------------------------*/
 .contact-hero {
-    /* Define tu imagen de fondo aquí */
     background: url('../img/contactanos.jpg') no-repeat center center/cover;
     background-size: cover;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
     min-height: 800px;
+    padding-top: 50px;
+    padding-bottom: 0;
 }
 
 .contact-overlay {
-    /* Fondo semitransparente para que el texto sea legible */
-    background: rgba(255, 255, 255, 0.228); 
-    padding: 40px 0;
+    background: rgba(255, 255, 255, 0.344); 
     width: 100%;
     min-height: inherit;
+    padding: 40px 100px 0 100px;
 }
 
-.contact-container {
-    display: flex;
-    gap: 40px;
+.title-block {
+    text-align: center;
     max-width: 1100px;
     margin: 0 auto;
+    padding: 20px 0 0 0; 
+}
+
+/* Título Principal */
+.title-block h1 {
+    font-size: 3.5rem;
+    color: #ffffff;
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); 
+    margin-bottom: 0;
+}
+
+
+/* --------------------------------------------------------------------
+   2. INFORMACIÓN DE CONTACTO (contact-section, info-item-grid)
+----------------------------------------------------------------------*/
+.contact-section {
+    max-width: 1100px;
+    margin: 20px auto; 
     padding: 0 20px;
+    text-align: center;
 }
 
-/* ------------------------------------------------*/
-/* 2. LADO IZQUIERDO: FORMULARIO                   */
-/* ------------------------------------------------*/
-.contact-form-side {
-    flex: 1.5;
+/* Subtítulo de la sección de info */
+.info-section h2 {
+    font-size: 2rem;
+    color: #555;
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase; 
+    margin-bottom: 30px;
 }
 
-.contact-form-side h1 {
-    font-size: 2.5rem;
-    color: #58655F;
+.contact-details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px;
+    padding: 30px;
+    background: #EFCEEA;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-item-grid {
+    padding: 15px;
+}
+
+/* Título de cada item (Email, Teléfono, etc.) */
+.info-item-grid h4 {
+    font-size: 1.2rem;
+    color: #555; 
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase; 
+    margin-bottom: 5px;
+}
+
+.info-item-grid p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+}
+
+.info-item-grid .info-icon {
+    font-size: 2rem;
+    display: block;
+    color: #c8b46c; 
     margin-bottom: 10px;
 }
 
-.contact-form-side p {
-    margin-bottom: 30px;
-    color: #555;
+
+/* --------------------------------------------------------------------
+   3. FORMULARIO DE CONTACTO (form-section, inputs, textarea, button)
+----------------------------------------------------------------------*/
+
+/* Contenedor Flex principal del formulario */
+.form-section {
+    display: flex;
+    align-items: flex-start;
+    max-width: 1100px;
+    margin: 40px auto 0 auto;
+    padding: 0 40px;
+    gap: 40px;
 }
 
+/* 3.1. Lado Izquierdo: Texto */
+.form-text-side {
+    flex: 1; 
+    padding: 20px 0;
+}
+
+.form-text-side h2 {
+    font-size: 2.5rem;
+    color: #ffffff;
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); 
+    margin-bottom: 20px;
+}
+
+/* 3.2. Lado Derecho: Formulario */
+.form-input-side {
+    flex: 1;
+    padding: 40px;
+    background: rgba(132, 190, 228, 0.792);
+    border-radius: 10px;
+}
+
+/* Estructura Flex del Formulario */
+.contact-form {
+    display: flex;
+    flex-wrap: wrap; 
+    align-items: center;
+    gap: 15px; 
+}
+
+/* Grupo de Inputs Cortos (Nombre, Email, etc.) */
+.contact-form .form-inputs-group {
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+}
+
+/* Campo de Texto Grande (Mensaje) */
+.contact-form textarea {
+    flex: 1; 
+    min-height: 200px; 
+    height: 100%; 
+    margin: 0; 
+}
+
+/* Estilos Comunes de Inputs y Textarea */
 .contact-form input,
 .contact-form textarea {
     width: 100%;
     padding: 12px;
-    margin-bottom: 15px;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 20px; 
     box-sizing: border-box; 
     background: #fff;
-    color: #33333300;
+    color: #333; 
+    margin: 0;
 }
 
-.contact-form input:focus,
-.contact-form textarea:focus {
-    border-color: #EFCEEA; 
-    outline: none;
-}
-
-.contact-form textarea {
-    resize: vertical;
-}
-
-
-.contact-form .btn-primary {
-    width: auto; 
-    padding: 20px 110px; 
-}
-
-/* ------------------------------------------------*/
-/* 3. LADO DERECHO: INFORMACIÓN                    */
-/* ------------------------------------------------*/
-
-.info-item {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 25px;
-}
-
-.info-icon {
-    font-size: 1.8rem;
-    margin-right: 15px; 
-    color: #58655F; 
-}
-
-.info-details {
-    display: flex;
-    flex-grow: 1; 
-    align-items: flex-start;
-}
-
-.info-details h4 {
-    flex-basis: 150px; 
-    min-width: 150px; 
+/* Estilo del Botón de Envío */
+.contact-form .btn {
+    width: 100%; 
+    display: block;
+    flex: none; 
+    padding: 15px 0; 
     font-size: 1.1rem;
-    color: #333;
-    margin: 0;
-    font-weight: bold; 
-}
-
-.info-details p {
-    flex-grow: 1; 
-    font-size: 1rem;
-    color: #555;
-    margin: 0;
-    line-height: 1.4;
-}
-
-.contact-info-side { 
-    flex: 1; 
-    padding: 100px 40px; 
-    background: #EFCEEA; 
-    border-radius: 10px; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
-} 
-
-.contact-container { 
-    display: flex; 
-    max-width: 750px; 
-    margin: 0 auto; 
-    padding: 0 40px; 
-    justify-content: space-between; 
+    margin: 15px 0 0 0;
+    border: none !important; 
+    outline: none !important; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 
-/* ------------------------------------------------*/
-/* 4. RESPONSIVE                                  */
-/* ------------------------------------------------*/
+/* --------------------------------------------------------------------
+   4. RESPONSIVE (Media Queries)
+----------------------------------------------------------------------*/
+
+/* Tablet (hasta 900px) */
+@media (max-width: 900px) {
+    .contact-overlay {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+    .contact-details-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Móvil y Tablet Pequeña (hasta 768px) */
 @media (max-width: 768px) {
-    .contact-container {
+    .form-section {
         flex-direction: column;
     }
-    
-    .contact-form-side,
-    .contact-info-side {
-        flex: auto;
+    .form-text-side {
+        text-align: center;
     }
+    .contact-details-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
-    .contact-info-side {
-        margin-top: 20px;
+/* Móvil Pequeño (hasta 600px) */
+@media (max-width: 600px) {
+    .contact-overlay {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .form-section {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .contact-form {
+        flex-direction: column; 
+    }
+    .contact-form .form-inputs-group,
+    .contact-form textarea {
+        width: 100%;
+        flex: none;
     }
 }
