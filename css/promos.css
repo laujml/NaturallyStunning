@@ -106,6 +106,7 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 .destacada-image {
@@ -155,6 +156,11 @@
     font-weight: bold;
 }
 
+.destacada-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
 
 /* ------------------------------------------------*/
 /* 3. PROMOS ESCONDIDAS (Grid de 3 Productos)       */
@@ -172,7 +178,6 @@
 }
 
 .escondida-text {
-    font-style: italic;
     color: #555;
     margin-bottom: 40px;
 }
@@ -205,9 +210,51 @@
     margin-bottom: 10px;
 }
 
+/* ------------------------------------------------*/
+/* 4. ESTILOS PARA ENLACES CLICABLES              */
+/* ------------------------------------------------*/
+
+.product-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.promo-destacada .product-link {
+    display: contents; 
+}
+
+
+.destacada-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.promo-destacada .product-link:hover .destacada-card {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.product-link:hover .product-card {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+.productos-grid .product-link {
+    height: 100%;
+}
 
 /* ------------------------------------------------*/
-/* 4. AJUSTES RESPONSIVE                           */
+/* 5. AJUSTES RESPONSIVE                           */
 /* ------------------------------------------------*/
 @media (max-width: 768px) {
     /* Banner */
