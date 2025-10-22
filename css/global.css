@@ -10,23 +10,32 @@ padding: 0;
 box-sizing: border-box; 
 }
 
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 /* -- Body: Estilos base de tipografía y fondo -- */
 body {
     font-family:  'Montserrat', sans-serif;
-background: #fdfdfd; 
-color: #202020; 
- overflow-x: hidden; 
+    background: #fdfdfd; 
+    color: #202020; 
+    overflow-x: hidden;
+    height: 100%;  
+    margin: 0 !important;  
+    padding: 0 !important;  
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Cormorant Garamond', serif;
-    font-weight: 900; /* Semibold para que resalten */
+    font-weight: 900; 
 }
 
 p {
     font-family: 'Montserrat', sans-serif; 
-    line-height: 1.6; /* Mejora la legibilidad */
-    /* Puedes añadir más estilos de color/tamaño aquí si es necesario */
+    line-height: 1.6; 
+    text-align: justify;
 }
 
 .hero h1 {
@@ -136,9 +145,19 @@ body {
 /* 3. CONTENIDO PRINCIPAL                          */
 /* ------------------------------------------------*/
 /* -- .content: Contenedor para el resto del contenido -- */
-.content {
-    transition: margin-left 0.3s; 
-    padding: 0;
+#content {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, width 0.3s ease; 
+    box-sizing: border-box; 
+    width: 100%; 
+    will-change: transform;
+    backface-visibility: hidden; 
+}
+
+#content > *:not(footer) {
+    flex: 0 0 auto;
 }
 
 
@@ -245,19 +264,44 @@ body {
 }
 
 /* ------------------------------------------------*/
-/* 5. FOOTER (Pie de Página)                      */
+/* 5. FOOTER (Pie de Página)                       */
 /* ------------------------------------------------*/
 /* -- footer: Estilo general del pie de página -- */
 footer {
     background: #EFCEEA; 
-    color: #939393;
-    text-align: center;
-    padding: 15px;
-    margin-top: 30px;
+    color: #58655F;
+    text-align: center !important;
+    padding: 20px 15px;
+    margin: 0; 
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: auto;
+}
+
+
+footer p {
+    text-align: center !important;
+    margin: 5px auto !important;
+}
+
+
+.footer-contenedor {
+    width: 100%; 
+    max-width: 900px;
+    margin: 0 auto; 
+    text-align: center !important;
 }
 
 body {
-    background-color: #f3e8d7; 
+    margin-bottom: 0 !important; 
+}
+
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#content {
     margin: 0;
     padding: 0;
 }
