@@ -3,59 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Cuenta - Naturally Stunning</title>
+    <title>Mi Perfil - Naturally Stunning</title>
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
-
     <input type="checkbox" id="menu-toggle" style="display: none;">
-
-    <aside id="sidebar" class="sidebar">
-        <ul>
-            <li><a href="profile.html">Mi cuenta</a></li>
-            <li><a href="productos.html">Productos</a></li>
-            <li><a href="promos.html">Promos</a></li>
-            <li><a href="contactanos.html">Contáctanos</a></li>
-            <li><a href="AcercadeNosotros.html">Acerca de</a></li>
-        </ul>
-    </aside>
-
-    <div id="content" class="content">
-        <header>
-            <div class="topbar">
-                <label for="menu-toggle" class="menu-btn icon">☰</label>
-                <div class="icons">
-                    <a href="carrito.html" class="icon cart-icon">
-                        🛒
-                        <span class="cart-badge" id="cart-badge">0</span>
-                    </a>
-                    <a href="profile.html" class="icon" id="profile-btn">👤</a>
-                </div>
-            </div>
-        </header>
+    <aside id="sidebar" class="sidebar"></aside>
+    
+    <div id="content"> 
+        <div id="topbar-placeholder"></div>
 
         <section class="profile-section">
             <div class="profile-container">
                 <div class="profile-header">
-                    <div class="profile-avatar">
-                        <span id="user-initials">NS</span>
-                    </div>
-                    <h2 id="user-name-display">Cargando...</h2>
-                    <p id="user-email-display"></p>
+                    <div class="profile-avatar" id="user-initials">?</div>
+                    <h2 id="user-name">Cargando...</h2>
+                    <p id="user-email"></p>
                 </div>
 
                 <div class="profile-tabs">
-                    <button class="tab-btn active" data-tab="info">Información Personal</button>
-                    <button class="tab-btn" data-tab="orders">Mis Pedidos</button>
+                    <button class="tab-btn active" data-tab="info">Información</button>
+                    <button class="tab-btn" data-tab="orders">Pedidos</button>
                 </div>
 
-                <!-- Tab: Información Personal -->
-                <div class="tab-content active" id="info-tab">
+                <div id="info-tab" class="tab-content active">
                     <form id="profile-form">
                         <div class="form-group">
-                            <label>Nombre Completo</label>
-                            <input type="text" id="profile-name" required>
+                            <label>Nombre</label>
+                            <input type="text" id="profile-name">
                         </div>
                         <div class="form-group">
                             <label>Email</label>
@@ -63,40 +39,92 @@
                         </div>
                         <div class="form-group">
                             <label>Teléfono</label>
-                            <input type="tel" id="profile-phone" placeholder="+503 0000-0000">
-                        </div>
-                        <div class="form-group">
-                            <label>Dirección</label>
-                            <textarea id="profile-address" rows="3" placeholder="Calle, colonia, ciudad..."></textarea>
+                            <input type="text" id="profile-phone">
                         </div>
                         <div class="success-message" id="profile-success"></div>
-                        <div class="error-message" id="profile-error"></div>
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
                     </form>
                 </div>
 
-                <!-- Tab: Mis Pedidos -->
-                <div class="tab-content" id="orders-tab">
-                    <div class="orders-empty">
-                        <p>📦 Aún no tienes pedidos</p>
-                        <a href="productos.html" class="btn btn-primary">Ir a Comprar</a>
-                    </div>
+                <div id="orders-tab" class="tab-content">
+                    <p style="text-align:center; padding:40px;">No tienes pedidos aún</p>
                 </div>
 
                 <div class="profile-actions">
-                    <button id="logout-btn" class="btn btn-secondary">Cerrar Sesión</button>
+                    <button class="btn btn-secondary" id="logout-btn">Cerrar Sesión</button>
                 </div>
             </div>
         </section>
 
         <footer>
-            <p>© 2025 Naturally Stunning - Todos los derechos reservados</p>
-            <p>Creado por Laura Angel y Jorge Flores</p>
+            <p>© 2025 Naturally Stunning</p>
         </footer>
     </div>
 
-    <script src="js/models/UserModel.js"></script>
-    <script src="js/controllers/AuthController.js"></script>
-    <script src="js/views/ProfileView.js"></script>
+    <script src="js/topbar_data.js"></script>
+    <script src="js/sidebar_data.js"></script>
+    <script>
+        document.getElementById('topbar-placeholder').innerHTML = TOPBAR_HTML;
+        document.getElementById('sidebar').innerHTML = SIDEBAR_CONTENT;
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9FwgsInMEb1_0lrFTFQ0mkjbzrDAsjLk",
+            authDomain: "naturallystunning.firebaseapp.com",
+            projectId: "naturallystunning",
+            storageBucket: "naturallystunning.firebasestorage.app",
+            messagingSenderId: "590111432564",
+            appId: "1:590111432564:web:8637bef1adff878a6a9621"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            const userData = userDoc.data();
+
+            document.getElementById('user-name').textContent = user.displayName || 'Usuario';
+            document.getElementById('user-email').textContent = user.email;
+            document.getElementById('user-initials').textContent = (user.displayName || 'U')[0];
+            document.getElementById('profile-name').value = user.displayName || '';
+            document.getElementById('profile-email').value = user.email;
+            document.getElementById('profile-phone').value = userData?.phone || '';
+        });
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab + '-tab').classList.add('active');
+            });
+        });
+
+        document.getElementById('profile-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const phone = document.getElementById('profile-phone').value;
+            
+            await updateDoc(doc(db, "users", auth.currentUser.uid), { phone });
+            document.getElementById('profile-success').textContent = '¡Actualizado!';
+            setTimeout(() => document.getElementById('profile-success').textContent = '', 3000);
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            await signOut(auth);
+            window.location.href = 'login.html';
+        });
+    </script>
 </body>
 </html>
