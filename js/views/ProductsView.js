@@ -1,6 +1,6 @@
 // Vista de Productos - Maneja la interfaz del catálogo
 document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar controladores
+    // Inicializar modelos y controladores
     const cartModel = new CartModel();
     const cartController = new CartController(cartModel);
 
@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalClose = document.getElementById('modal-close');
     const modalBody = document.getElementById('modal-body');
 
+    console.log('🚀 Iniciando ProductsView...');
+    console.log('Productos disponibles:', currentProducts.length);
+
     // Función para formatear precio
     function formatPrice(price) {
         return `$${price.toFixed(2)} USD`;
@@ -39,7 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Función para renderizar productos
     function renderProducts(products) {
         productsGrid.innerHTML = '';
-
+        
+        console.log('📦 Renderizando', products.length, 'productos');
+        
         if (products.length === 0) {
             noResults.style.display = 'block';
             productCount.textContent = '0';
@@ -50,9 +55,11 @@ document.addEventListener('DOMContentLoaded', function() {
         productCount.textContent = products.length;
 
         products.forEach(product => {
-            const card = document.createElement('div');
+            const card = document.createElement('a');
+            card.href = `producto.html?id=${product.id}`;
             card.className = 'product-card';
-            card.dataset.productId = product.id;
+            card.style.textDecoration = 'none';
+            card.style.color = 'inherit';
 
             let badge = '';
             if (product.originalPrice) {
@@ -68,12 +75,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 'skincare': 'Cuidado de la Piel',
                 'makeup': 'Maquillaje',
                 'accessories': 'Accesorios'
-            }[product.category];
+            }[product.category] || product.category;
 
             card.innerHTML = `
                 ${badge}
                 <div class="product-image">
-                    <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'placeholder\\'>🌿</span>';">
+                    <img src="${product.image}" alt="${product.name}" onerror="this.src='img/placeholder.png'">
                 </div>
                 <div class="product-info">
                     <p class="product-category">${categoryName}</p>
@@ -83,11 +90,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         ${product.originalPrice ? `<span class="price-original">${formatPrice(product.originalPrice)}</span>` : ''}
                     </div>
                     <div class="product-actions">
-                        <button class="btn btn-primary add-to-cart-btn" data-product-id="${product.id}">
+                        <button class="btn btn-primary add-to-cart-btn" data-product-id="${product.id}" onclick="event.preventDefault(); event.stopPropagation(); addToCart('${product.id}');">
                             Agregar al Carrito
-                        </button>
-                        <button class="btn btn-icon view-details-btn" data-product-id="${product.id}">
-                            👁️
                         </button>
                     </div>
                 </div>
@@ -96,37 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             productsGrid.appendChild(card);
         });
 
-        // Adjuntar event listeners
-        attachProductListeners();
-    }
-
-    // Función para adjuntar event listeners a los productos
-    function attachProductListeners() {
-        // Botones de agregar al carrito
-        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const productId = this.dataset.productId;
-                addToCart(productId);
-            });
-        });
-
-        // Botones de ver detalles
-        document.querySelectorAll('.view-details-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const productId = this.dataset.productId;
-                showProductModal(productId);
-            });
-        });
-
-        // Click en la tarjeta completa
-        document.querySelectorAll('.product-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const productId = this.dataset.productId;
-                showProductModal(productId);
-            });
-        });
+        updateCartBadge();
     }
 
     // Función para agregar al carrito
@@ -135,18 +109,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!product) return;
 
         const result = cartController.handleAddToCart(product);
-        
         if (result.success) {
-            // Actualizar badge del carrito
-            const cartBadge = document.getElementById('cart-badge');
-            if (cartBadge) {
-                const totalItems = cartController.getTotalItems();
-                cartBadge.textContent = totalItems;
-                cartBadge.style.display = 'flex';
-            }
-
-            // Animación de confirmación
-            showNotification('✓ Producto agregado al carrito');
+            showNotification('Producto agregado al carrito');
+            updateCartBadge();
         }
     }
 
@@ -160,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
             background: #27ae60;
             color: white;
             padding: 15px 25px;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: 600;
             z-index: 10000;
             animation: slideIn 0.3s ease-out;
@@ -174,99 +139,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000);
     }
 
-    // Función para mostrar modal de producto
-    function showProductModal(productId) {
-        const product = getProductById(productId);
-        if (!product) return;
-
-        const categoryName = {
-            'skincare': 'Cuidado de la Piel',
-            'makeup': 'Maquillaje',
-            'accessories': 'Accesorios'
-        }[product.category];
-
-        modalBody.innerHTML = `
-            <div class="modal-product">
-                <div class="modal-image">
-                    <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'placeholder\\' style=\\'font-size:80px\\'>🌿</span>';">
-                </div>
-                <div class="modal-details">
-                    <p class="product-category">${categoryName}</p>
-                    <h2>${product.name}</h2>
-                    <div class="product-price">
-                        <span class="price-current">${formatPrice(product.price)}</span>
-                        ${product.originalPrice ? `<span class="price-original">${formatPrice(product.originalPrice)}</span>` : ''}
-                    </div>
-                    <p class="product-description">${product.description}</p>
-                    ${product.benefits ? `
-                        <div class="benefits-list">
-                            <h4>Beneficios:</h4>
-                            <ul>
-                                ${product.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
-                            </ul>
-                        </div>
-                    ` : ''}
-                    <p class="stock-info ${product.stock < 10 ? 'low' : ''}">
-                        ${product.stock > 0 ? `${product.stock} unidades disponibles` : 'Agotado'}
-                    </p>
-                    <div class="product-actions">
-                        <button class="btn btn-primary" onclick="document.dispatchEvent(new CustomEvent('addToCartFromModal', {detail: '${product.id}'}))">
-                            Agregar al Carrito
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+    // Función para actualizar badge del carrito
+    function updateCartBadge() {
+        const badge = document.querySelector('.cart-badge');
+        if (badge) {
+            const count = cartController.getTotalItems();
+            badge.textContent = count;
+            badge.style.display = count > 0 ? 'flex' : 'none';
+        }
     }
-
-    // Cerrar modal
-    function closeModal() {
-        modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-
-    modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) closeModal();
-    });
-
-    // Event listener para agregar al carrito desde el modal
-    document.addEventListener('addToCartFromModal', function(e) {
-        addToCart(e.detail);
-        closeModal();
-    });
 
     // Función para aplicar filtros
     function applyFilters() {
         let filtered = getAllProducts();
 
-        // Filtro de categoría
         if (currentFilters.category !== 'all') {
             filtered = filtered.filter(p => p.category === currentFilters.category);
         }
 
-        // Filtro de destacados
         if (currentFilters.featured) {
             filtered = filtered.filter(p => p.featured);
         }
 
-        // Filtro de best sellers
         if (currentFilters.bestseller) {
             filtered = filtered.filter(p => p.bestSeller);
         }
 
-        // Filtro de promoción
         if (currentFilters.promotion) {
             filtered = filtered.filter(p => p.originalPrice !== null);
         }
 
-        // Búsqueda
         if (currentFilters.search) {
             const query = currentFilters.search.toLowerCase();
-            filtered = filtered.filter(p =>
+            filtered = filtered.filter(p => 
                 p.name.toLowerCase().includes(query) ||
                 p.description.toLowerCase().includes(query)
             );
@@ -292,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 sorted.sort((a, b) => a.price - b.price);
                 break;
             case 'price-desc':
-                sorted.sort((a, b) => b.price - a.price);
+                sorted.sort((a, b) => b.price - b.price);
                 break;
         }
 
@@ -363,6 +268,23 @@ document.addEventListener('DOMContentLoaded', function() {
         applyFilters();
     });
 
-    // Renderizar productos iniciales
+    // Renderizar productos al cargar
     renderProducts(currentProducts);
+    
+    // Actualizar badge al cargar
+    updateCartBadge();
+
+    // Agregar estilos de animación
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
 });
