@@ -3,89 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - Naturally Stunning</title>
+    <title>Login - Naturally Stunning</title>
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-
     <input type="checkbox" id="menu-toggle" style="display: none;">
-
-    <aside id="sidebar" class="sidebar">
-        <ul>
-            <li><a href="profile.html">Mi cuenta</a></li>
-            <li><a href="productos.html">Productos</a></li>
-            <li><a href="promos.html">Promos</a></li>
-            <li><a href="contactanos.html">Contáctanos</a></li>
-            <li><a href="AcercadeNosotros.html">Acerca de</a></li>
-        </ul>
-    </aside>
-
-    <div id="content" class="content">
-        <header>
-            <div class="topbar">
-                <label for="menu-toggle" class="menu-btn icon">☰</label>
-                <div class="icons">
-                    <a href="carrito.html" class="icon cart-icon">
-                        🛒
-                        <span class="cart-badge" id="cart-badge">0</span>
-                    </a>
-                    <a href="login.html" class="icon" id="profile-btn">👤</a>
-                </div>
-            </div>
-        </header>
+    <aside id="sidebar" class="sidebar"></aside>
+    
+    <div id="content"> 
+        <div id="topbar-placeholder"></div>
 
         <section class="login-section">
             <div class="login-container">
-                <!-- Formulario de Login -->
-                <div class="form-wrapper" id="login-form-wrapper">
+                
+                <!-- LOGIN -->
+                <div id="login-form-wrapper" class="form-wrapper">
                     <h2>Iniciar Sesión</h2>
                     <form id="login-form">
                         <div class="form-group">
-                            <input type="email" id="login-email" placeholder="Correo electrónico" required>
+                            <input type="email" id="login-email" placeholder="Correo" required>
                         </div>
                         <div class="form-group">
                             <input type="password" id="login-password" placeholder="Contraseña" required>
                         </div>
                         <div class="error-message" id="login-error"></div>
                         <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                        <p class="toggle-form">¿No tienes cuenta? <a href="#" id="show-register">Regístrate aquí</a></p>
                     </form>
+                    <div class="toggle-form">
+                        ¿No tienes cuenta? <a href="#" id="show-register">Regístrate</a>
+                    </div>
                 </div>
 
-                <!-- Formulario de Registro -->
-                <div class="form-wrapper hidden" id="register-form-wrapper">
+                <!-- REGISTRO -->
+                <div id="register-form-wrapper" class="form-wrapper hidden">
                     <h2>Crear Cuenta</h2>
                     <form id="register-form">
                         <div class="form-group">
-                            <input type="text" id="register-name" placeholder="Nombre completo" required>
+                            <input type="text" id="register-name" placeholder="Nombre" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" id="register-email" placeholder="Correo electrónico" required>
+                            <input type="email" id="register-email" placeholder="Correo" required>
                         </div>
                         <div class="form-group">
-                            <input type="password" id="register-password" placeholder="Contraseña (mínimo 6 caracteres)" required minlength="6">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" id="register-confirm-password" placeholder="Confirmar contraseña" required>
+                            <input type="password" id="register-password" placeholder="Contraseña" required>
                         </div>
                         <div class="error-message" id="register-error"></div>
                         <div class="success-message" id="register-success"></div>
                         <button type="submit" class="btn btn-primary">Crear Cuenta</button>
-                        <p class="toggle-form">¿Ya tienes cuenta? <a href="#" id="show-login">Inicia sesión aquí</a></p>
                     </form>
+                    <div class="toggle-form">
+                        ¿Ya tienes cuenta? <a href="#" id="show-login">Inicia sesión</a>
+                    </div>
                 </div>
             </div>
         </section>
 
         <footer>
-            <p>© 2025 Naturally Stunning - Todos los derechos reservados</p>
-            <p>Creado por Laura Angel y Jorge Flores</p>
+            <p>© 2025 Naturally Stunning</p>
         </footer>
     </div>
 
-    <script src="js/models/UserModel.js"></script>
-    <script src="js/controllers/AuthController.js"></script>
-    <script src="js/views/LoginView.js"></script>
+    <script src="js/topbar_data.js"></script>
+    <script src="js/sidebar_data.js"></script>
+    <script>
+        document.getElementById('topbar-placeholder').innerHTML = TOPBAR_HTML;
+        document.getElementById('sidebar').innerHTML = SIDEBAR_CONTENT;
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9FwgsInMEb1_0lrFTFQ0mkjbzrDAsjLk",
+            authDomain: "naturallystunning.firebaseapp.com",
+            projectId: "naturallystunning",
+            storageBucket: "naturallystunning.firebasestorage.app",
+            messagingSenderId: "590111432564",
+            appId: "1:590111432564:web:8637bef1adff878a6a9621"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const loginFormWrapper = document.getElementById('login-form-wrapper');
+        const registerFormWrapper = document.getElementById('register-form-wrapper');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const showRegisterBtn = document.getElementById('show-register');
+        const showLoginBtn = document.getElementById('show-login');
+        const loginError = document.getElementById('login-error');
+        const registerError = document.getElementById('register-error');
+        const registerSuccess = document.getElementById('register-success');
+
+        showRegisterBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginFormWrapper.classList.add('hidden');
+            registerFormWrapper.classList.remove('hidden');
+            loginError.textContent = '';
+        });
+
+        showLoginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerFormWrapper.classList.add('hidden');
+            loginFormWrapper.classList.remove('hidden');
+            registerError.textContent = '';
+            registerSuccess.textContent = '';
+        });
+
+        // REGISTRO
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                await updateProfile(userCredential.user, { displayName: name });
+                await setDoc(doc(db, "users", userCredential.user.uid), {
+                    name: name,
+                    email: email,
+                    createdAt: new Date().toISOString()
+                });
+                
+                registerError.textContent = '';
+                registerSuccess.textContent = '¡Cuenta creada!';
+                setTimeout(() => {
+                    window.location.href = 'profile.html';
+                }, 1500);
+            } catch (error) {
+                registerSuccess.textContent = '';
+                registerError.textContent = error.code === 'auth/email-already-in-use' ? 'Email ya existe' : 'Error al crear cuenta';
+            }
+        });
+
+        // LOGIN
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                window.location.href = 'profile.html';
+            } catch (error) {
+                loginError.textContent = 'Email o contraseña incorrectos';
+            }
+        });
+    </script>
 </body>
 </html>
