@@ -5,10 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos - Naturally Stunning</title>
     <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/productos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .productos-hero {
+            background: linear-gradient(135deg, #EFCEEA 0%, #FADE8D 100%);
+            text-align: center;
+            padding: 80px 20px;
+            color: #fff;
+        }
+        .productos-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .filtros-container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 12px 24px;
+            border: 2px solid #EFCEEA;
+            background: white;
+            color: #333;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .filter-btn:hover { background: #EFCEEA; transform: translateY(-2px); }
+        .filter-btn.active { background: #EFCEEA; border-color: #FADE8D; }
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .producto-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+        .producto-card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+        .producto-image { width: 100%; height: 250px; overflow: hidden; background: #f5f5f5; }
+        .producto-image img { width: 100%; height: 100%; object-fit: cover; }
+        .producto-info { padding: 20px; }
+        .producto-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-bottom: 10px; }
+        .producto-categoria { font-size: 0.85rem; color: #58655F; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .producto-precio { font-size: 1.3rem; font-weight: 600; color: #58655F; margin: 15px 0; }
+        .producto-actions { display: flex; gap: 10px; margin-top: 15px; }
+        .btn { padding: 12px 20px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.3s; flex: 1; }
+        .btn-primary { background: #EFCEEA; color: #333; }
+        .btn-primary:hover { background: #FADE8D; transform: translateY(-2px); }
+        .btn-secondary { background: white; color: #58655F; border: 2px solid #EFCEEA; }
+        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; overflow-y: auto; }
+        .modal-content { background: white; border-radius: 15px; max-width: 900px; width: 90%; margin: 20px; position: relative; padding: 40px; max-height: 90vh; overflow-y: auto; }
+        .modal-close { position: absolute; top: 15px; right: 25px; font-size: 35px; cursor: pointer; color: #999; }
+        .modal-close:hover { color: #333; }
+        .modal-body h2 { font-family: 'Cormorant Garamond', serif; color: #58655F; font-size: 2rem; margin-bottom: 20px; }
+        .modal-body img { max-width: 400px; width: 100%; margin: 20px auto; display: block; border-radius: 10px; }
+        .modal-details { text-align: left; padding: 20px; }
+        .modal-details p { margin: 15px 0; line-height: 1.7; }
+        .modal-details ul { margin: 15px 0 15px 20px; line-height: 1.8; }
+        .notification { position: fixed; bottom: 20px; right: 20px; background: #27ae60; color: white; padding: 15px 25px; border-radius: 8px; font-weight: 600; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.2); animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @media (max-width: 992px) { .productos-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .productos-grid { grid-template-columns: 1fr; } .productos-hero h1 { font-size: 2rem; } }
+    </style>
 </head>
 <body>
     <input type="checkbox" id="menu-toggle" style="display: none;">
@@ -16,32 +92,27 @@
     
     <div id="content"> 
         <div id="topbar-placeholder"></div>
-                
         <section class="productos-hero">
             <h1>NUESTROS PRODUCTOS</h1>
-            <p>Descubre nuestra selección de productos naturales para el cuidado de tu piel</p>
+            <p>Descubre nuestra selección de productos naturales</p>
         </section>
-
-        <section class="productos-catalogo">
-            <div class="productos-grid" id="products-grid">
-                <!-- Los productos se cargan aquí dinámicamente -->
-            </div>
-        </section>
-
-        <!-- MODAL DE DETALLES -->
+        <div class="filtros-container">
+            <button class="filter-btn active" data-category="all">Todos</button>
+            <button class="filter-btn" data-category="skincare">Cuidado de la Piel</button>
+            <button class="filter-btn" data-category="makeup">Maquillaje</button>
+            <button class="filter-btn" data-category="accessories">Accesorios</button>
+        </div>
+        <div class="productos-grid" id="products-grid"></div>
         <div id="product-modal" class="modal">
             <div class="modal-content">
                 <span class="modal-close" id="modal-close">&times;</span>
                 <div class="modal-body" id="modal-body"></div>
             </div>
         </div>
-        
         <footer>
-            <p>© 2025 Naturally Stunning - Todos los derechos reservados</p>
-            <p>Creado por Laura Angel y Jorge Flores</p>
+            <p>© 2025 Naturally Stunning</p>
         </footer>
     </div>
-
     <script src="js/topbar_data.js"></script>
     <script src="js/sidebar_data.js"></script>
     <script src="js/data/Products.js"></script>
@@ -49,270 +120,82 @@
         document.getElementById('topbar-placeholder').innerHTML = TOPBAR_HTML;
         document.getElementById('sidebar').innerHTML = SIDEBAR_CONTENT;
     </script>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyB9FwgsInMEb1_0lrFTFQ0mkjbzrDAsjLk",
-            authDomain: "naturallystunning.firebaseapp.com",
-            projectId: "naturallystunning",
-            storageBucket: "naturallystunning.firebasestorage.app",
-            messagingSenderId: "590111432564",
-            appId: "1:590111432564:web:8637bef1adff878a6a9621"
-        };
-
+        const firebaseConfig = { apiKey: "AIzaSyB9FwgsInMEb1_0lrFTFQ0mkjbzrDAsjLk", authDomain: "naturallystunning.firebaseapp.com", projectId: "naturallystunning", storageBucket: "naturallystunning.firebasestorage.app", messagingSenderId: "590111432564", appId: "1:590111432564:web:8637bef1adff878a6a9621" };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-
-        // Cargar productos desde Products.js
-        const products = getAllProducts();
+        let allProducts = [];
         const grid = document.getElementById('products-grid');
         const modal = document.getElementById('product-modal');
         const modalBody = document.getElementById('modal-body');
-        const modalClose = document.getElementById('modal-close');
-
-        console.log('📦 Cargando', products.length, 'productos...');
-
-        // Renderizar todos los productos
-        products.forEach(product => {
-            const card = document.createElement('div');
-            card.className = 'producto-card';
-            
-            const categoryNames = {
-                'skincare': 'Cuidado de la Piel',
-                'makeup': 'Maquillaje',
-                'accessories': 'Accesorios'
-            };
-            
-            card.innerHTML = `
-                <div class="producto-image">
-                    <img src="${product.image}" alt="${product.name}" onerror="this.src='img/placeholder.png'">
-                </div>
-                <div class="producto-info">
-                    <h3>${product.name}</h3>
-                    <p class="producto-descripcion">${product.description.substring(0, 120)}...</p>
-                    <div class="producto-footer">
-                        <span class="producto-precio">$${product.price.toFixed(2)} USD</span>
-                        <div style="display:flex;gap:10px;justify-content:space-between;">
-                            <button class="btn btn-agregar" onclick="addToCart('${product.id}')">
-                                🛒 Agregar
-                            </button>
-                            <button class="btn btn-ver" onclick="showModal('${product.id}')">
-                                👁️ Ver más
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            grid.appendChild(card);
-        });
-
-        console.log('✅ Productos renderizados');
-
-        // Función para mostrar modal con detalles completos
-        window.showModal = (id) => {
-            const product = getProductById(id);
-            if (!product) {
-                console.error('Producto no encontrado:', id);
+        function loadProducts() {
+            allProducts = typeof getAllProducts === 'function' ? getAllProducts() : [];
+            console.log('✅ Productos:', allProducts.length);
+            renderProducts(allProducts);
+        }
+        function renderProducts(products) {
+            grid.innerHTML = '';
+            if (products.length === 0) {
+                grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:40px;">No hay productos</p>';
                 return;
             }
-            
-            console.log('📄 Mostrando modal para:', product.name);
-            
-            const categoryNames = {
-                'skincare': 'Cuidado de la Piel',
-                'makeup': 'Maquillaje',
-                'accessories': 'Accesorios'
-            };
-            
-            modalBody.innerHTML = `
-                <h2>${product.name}</h2>
-                <img src="${product.image}" alt="${product.name}" onerror="this.src='img/placeholder.png'">
-                
-                <div class="modal-details">
-                    <p><strong>Categoría:</strong> ${categoryNames[product.category] || product.category}</p>
-                    
-                    <p><strong>Precio:</strong> <span class="modal-price">$${product.price.toFixed(2)} USD</span></p>
-                    
-                    ${product.originalPrice ? 
-                        `<p><strong>Precio original:</strong> <s style="color:#999;">$${product.originalPrice.toFixed(2)} USD</s> 
-                        <span style="color:#e74c3c;font-weight:600;margin-left:10px;">
-                            ¡Ahorra ${Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%!
-                        </span></p>` 
-                        : ''}
-                    
-                    <p><strong>Descripción:</strong><br>${product.description}</p>
-                    
-                    ${product.benefits && product.benefits.length > 0 ? `
-                        <p style="margin-top:20px;"><strong>Beneficios:</strong></p>
-                        <ul>
-                            ${product.benefits.map(b => `<li>✓ ${b}</li>`).join('')}
-                        </ul>
-                    ` : ''}
-                    
-                    ${product.ingredients && product.ingredients.length > 0 ? `
-                        <p style="margin-top:20px;"><strong>Ingredientes principales:</strong></p>
-                        <ul>
-                            ${product.ingredients.map(i => `<li>🌿 ${i}</li>`).join('')}
-                        </ul>
-                    ` : ''}
-                    
-                    ${product.colors && product.colors.length > 0 ? `
-                        <p style="margin-top:20px;"><strong>Colores disponibles:</strong> ${product.colors.join(', ')}</p>
-                    ` : ''}
-                    
-                    <p style="margin-top:20px;"><strong>Disponibilidad:</strong> 
-                        ${product.stock > 0 ? 
-                            `<span style="color:#27ae60;">✓ ${product.stock} unidades en stock</span>` : 
-                            `<span style="color:#e74c3c;">✗ Agotado</span>`}
-                    </p>
-                    
-                    ${product.featured ? '<p style="color:#f39c12;font-weight:600;">⭐ Producto Destacado</p>' : ''}
-                    ${product.bestSeller ? '<p style="color:#27ae60;font-weight:600;">🏆 Best Seller</p>' : ''}
-                    ${product.bundle ? '<p style="color:#3498db;font-weight:600;">📦 Set Completo</p>' : ''}
-                    
-                    <button class="btn btn-agregar" 
-                            style="width:100%;margin-top:30px;padding:15px;font-size:1.1rem;"
-                            onclick="addToCart('${product.id}'); closeModal();"
-                            ${product.stock <= 0 ? 'disabled' : ''}>
-                        ${product.stock > 0 ? 
-                            `✓ Agregar al Carrito - $${product.price.toFixed(2)} USD` : 
-                            'Producto Agotado'}
-                    </button>
-                </div>
-            `;
-            
+            const categoryNames = { 'skincare': 'Cuidado de la Piel', 'makeup': 'Maquillaje', 'accessories': 'Accesorios' };
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'producto-card';
+                card.innerHTML = `<div class="producto-image"><img src="${product.image}" alt="${product.name}" onerror="this.src='img/placeholder.png'"></div><div class="producto-info"><p class="producto-categoria">${categoryNames[product.category]}</p><h3>${product.name}</h3><p class="producto-precio">$${product.price.toFixed(2)} USD</p><div class="producto-actions"><button class="btn btn-primary" onclick="window.addToCartHandler('${product.id}')">🛒 Agregar</button><button class="btn btn-secondary" onclick="window.showModalHandler('${product.id}')">Ver más</button></div></div>`;
+                grid.appendChild(card);
+            });
+        }
+        function filterProducts(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.category === category);
+            });
+            renderProducts(category === 'all' ? allProducts : allProducts.filter(p => p.category === category));
+        }
+        window.showModalHandler = function(id) {
+            const product = allProducts.find(p => p.id === id);
+            if (!product) return;
+            const categoryNames = { 'skincare': 'Cuidado de la Piel', 'makeup': 'Maquillaje', 'accessories': 'Accesorios' };
+            modalBody.innerHTML = `<h2>${product.name}</h2><img src="${product.image}" alt="${product.name}"><div class="modal-details"><p><strong>Categoría:</strong> ${categoryNames[product.category]}</p><p><strong>Precio:</strong> <span style="color:#58655F;font-size:1.8rem;font-weight:600;">$${product.price.toFixed(2)} USD</span></p>${product.originalPrice ? `<p><strong>Antes:</strong> <s>$${product.originalPrice.toFixed(2)}</s> <span style="color:#e74c3c;">¡${Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF!</span></p>` : ''}<p><strong>Descripción:</strong><br>${product.description}</p>${product.benefits ? `<p><strong>Beneficios:</strong></p><ul>${product.benefits.map(b => `<li>✓ ${b}</li>`).join('')}</ul>` : ''}${product.ingredients ? `<p><strong>Ingredientes:</strong></p><ul>${product.ingredients.map(i => `<li>🌿 ${i}</li>`).join('')}</ul>` : ''}<p><strong>Stock:</strong> ${product.stock > 0 ? `<span style="color:#27ae60;">✓ ${product.stock} unidades</span>` : `<span style="color:#e74c3c;">Agotado</span>`}</p><button class="btn btn-primary" style="width:100%;margin-top:30px;padding:15px;" onclick="window.addToCartHandler('${product.id}');window.closeModalHandler();">${product.stock > 0 ? `✓ Agregar - $${product.price.toFixed(2)}` : 'Agotado'}</button></div>`;
             modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
         };
-
-        // Función para cerrar modal
-        window.closeModal = () => {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        };
-
-        // Event listeners para cerrar modal
-        modalClose.onclick = closeModal;
-        
-        modal.onclick = (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        };
-
-        // Cerrar con ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.style.display === 'flex') {
-                closeModal();
-            }
-        });
-
-        // Función para agregar al carrito
-        window.addToCart = async (id) => {
-            const product = getProductById(id);
-            if (!product) {
-                alert('❌ Producto no encontrado');
-                return;
-            }
-
-            if (product.stock <= 0) {
-                alert('❌ Este producto está agotado');
-                return;
-            }
-            
+        window.closeModalHandler = function() { modal.style.display = 'none'; };
+        document.getElementById('modal-close').onclick = closeModalHandler;
+        modal.onclick = (e) => { if (e.target === modal) closeModalHandler(); };
+        window.addToCartHandler = async function(id) {
+            const product = allProducts.find(p => p.id === id);
+            if (!product || product.stock <= 0) { showNotification('❌ No disponible'); return; }
             const user = auth.currentUser;
-            
-            if (!user) {
-                if (confirm('Debes iniciar sesión para agregar productos al carrito.\n\n¿Ir a la página de login?')) {
-                    window.location.href = 'login.html';
-                }
-                return;
-            }
-
+            if (!user) { if (confirm('Debes iniciar sesión.\n¿Ir a login?')) window.location.href = 'login.html'; return; }
             try {
                 const cartRef = doc(db, "carts", user.uid);
                 const cartSnap = await getDoc(cartRef);
-                let cart = cartSnap.exists() ? cartSnap.data().items || [] : [];
-                
+                let cart = cartSnap.exists() ? (cartSnap.data().items || []) : [];
                 const existingIndex = cart.findIndex(item => item.id === id);
-                
                 if (existingIndex > -1) {
-                    // Verificar stock antes de incrementar
-                    if (cart[existingIndex].quantity >= product.stock) {
-                        alert(`❌ No hay más stock disponible (máximo: ${product.stock} unidades)`);
-                        return;
-                    }
+                    if (cart[existingIndex].quantity >= product.stock) { showNotification(`❌ Máximo: ${product.stock}`); return; }
                     cart[existingIndex].quantity += 1;
                 } else {
-                    cart.push({
-                        id: product.id,
-                        name: product.name,
-                        price: product.price,
-                        image: product.image,
-                        quantity: 1,
-                        category: product.category
-                    });
+                    cart.push({ id: product.id, name: product.name, price: product.price, image: product.image, quantity: 1, category: product.category });
                 }
-
-                await setDoc(cartRef, { 
-                    items: cart, 
-                    updatedAt: new Date().toISOString() 
-                });
-                
-                showNotification(`✅ ${product.name} agregado al carrito`);
-                
-            } catch (error) {
-                console.error('Error al agregar al carrito:', error);
-                alert('❌ Error al agregar al carrito. Por favor intenta de nuevo.');
-            }
+                await setDoc(cartRef, { items: cart, updatedAt: new Date().toISOString() });
+                showNotification(`✅ ${product.name} agregado`);
+            } catch (error) { console.error(error); showNotification('❌ Error'); }
         };
-
-        // Función para mostrar notificación
         function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: #27ae60;
-                color: white;
-                padding: 15px 25px;
-                border-radius: 8px;
-                font-weight: 600;
-                z-index: 10000;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-                animation: slideIn 0.3s ease-out;
-            `;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease-in';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
+            const n = document.createElement('div');
+            n.className = 'notification';
+            n.textContent = message;
+            document.body.appendChild(n);
+            setTimeout(() => n.remove(), 3000);
         }
-
-        // Agregar estilos de animación
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(400px); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(400px); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-
-        console.log(' Página de productos lista');
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => filterProducts(btn.dataset.category)));
+        loadProducts();
     </script>
 </body>
 </html>
