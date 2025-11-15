@@ -8,132 +8,261 @@
     <link rel="stylesheet" href="css/productos.css">
 </head>
 <body>
-
     <input type="checkbox" id="menu-toggle" style="display: none;">
-
-    <aside id="sidebar" class="sidebar">
-        <ul>
-            <li><a href="profile.html">Mi cuenta</a></li>
-            <li><a href="productos.html">Productos</a></li>
-            <li><a href="promos.html">Promos</a></li>
-            <li><a href="contactanos.html">Contáctanos</a></li>
-            <li><a href="AcercadeNosotros.html">Acerca de</a></li>
-        </ul>
-    </aside>
-
-    <div id="content" class="content">
-        <header>
-            <div class="topbar">
-                <label for="menu-toggle" class="menu-btn icon">☰</label>
-                <div class="icons">
-                    <a href="carrito.html" class="icon cart-icon">
-                        🛒
-                        <span class="cart-badge" id="cart-badge">0</span>
-                    </a>
-                    <a href="login.html" class="icon" id="profile-btn">👤</a>
-                </div>
-            </div>
-        </header>
-
-        <section class="products-hero">
-            <h1>Nuestros Productos</h1>
-            <p>Descubre nuestra colección completa de productos naturales para el cuidado de tu piel</p>
+    <aside id="sidebar" class="sidebar"></aside>
+    
+    <div id="content"> 
+        <div id="topbar-placeholder"></div>
+                
+        <section class="productos-hero">
+            <h1>NUESTROS PRODUCTOS</h1>
+            <p>Descubre nuestra selección de productos naturales para el cuidado de tu piel</p>
         </section>
 
-        <section class="products-section">
-            <div class="products-container">
-                <!-- Filtros y búsqueda -->
-                <aside class="filters-sidebar">
-                    <div class="search-box">
-                        <input type="text" id="search-input" placeholder="Buscar productos...">
-                        <button id="search-btn">🔍</button>
-                    </div>
-
-                    <div class="filter-group">
-                        <h3>Categorías</h3>
-                        <label class="filter-option">
-                            <input type="radio" name="category" value="all" checked>
-                            <span>Todos los productos</span>
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="category" value="skincare">
-                            <span>Cuidado de la Piel</span>
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="category" value="makeup">
-                            <span>Maquillaje</span>
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="category" value="accessories">
-                            <span>Accesorios</span>
-                        </label>
-                    </div>
-
-                    <div class="filter-group">
-                        <h3>Filtros</h3>
-                        <label class="filter-option">
-                            <input type="checkbox" id="filter-featured">
-                            <span>Destacados</span>
-                        </label>
-                        <label class="filter-option">
-                            <input type="checkbox" id="filter-bestseller">
-                            <span>Best Sellers</span>
-                        </label>
-                        <label class="filter-option">
-                            <input type="checkbox" id="filter-promotion">
-                            <span>En Promoción</span>
-                        </label>
-                    </div>
-
-                    <button class="btn btn-secondary" id="clear-filters">Limpiar Filtros</button>
-                </aside>
-
-                <!-- Grid de productos -->
-                <div class="products-main">
-                    <div class="products-header">
-                        <p class="products-count">Mostrando <span id="product-count">0</span> productos</p>
-                        <select id="sort-select">
-                            <option value="default">Ordenar por</option>
-                            <option value="name-asc">Nombre (A-Z)</option>
-                            <option value="name-desc">Nombre (Z-A)</option>
-                            <option value="price-asc">Precio (Menor a Mayor)</option>
-                            <option value="price-desc">Precio (Mayor a Menor)</option>
-                        </select>
-                    </div>
-
-                    <div class="products-grid" id="products-grid">
-                        <!-- Los productos se cargarán dinámicamente -->
-                    </div>
-
-                    <div class="no-results" id="no-results" style="display: none;">
-                        <p>😕 No se encontraron productos</p>
-                        <button class="btn btn-primary" id="reset-search">Ver todos los productos</button>
-                    </div>
-                </div>
+        <section class="productos-catalogo">
+            <div class="productos-grid" id="products-grid">
+                <!-- Los productos se cargan aquí -->
             </div>
         </section>
 
+        <!-- MODAL -->
+        <div id="product-modal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="modal-close" id="modal-close">&times;</span>
+                <div class="modal-body" id="modal-body"></div>
+            </div>
+        </div>
+        
         <footer>
             <p>© 2025 Naturally Stunning - Todos los derechos reservados</p>
             <p>Creado por Laura Angel y Jorge Flores</p>
         </footer>
     </div>
 
-    <!-- Modal de producto -->
-    <div class="modal" id="product-modal">
-        <div class="modal-content">
-            <span class="modal-close" id="modal-close">&times;</span>
-            <div class="modal-body" id="modal-body">
-                <!-- Contenido del producto se cargará dinámicamente -->
-            </div>
-        </div>
-    </div>
+    <script src="js/topbar_data.js"></script>
+    <script src="js/sidebar_data.js"></script>
+    <script src="js/data/Products.js"></script>
+    <script>
+        document.getElementById('topbar-placeholder').innerHTML = TOPBAR_HTML;
+        document.getElementById('sidebar').innerHTML = SIDEBAR_CONTENT;
+    </script>
 
-    <script src="js/data/products.js"></script>
-    <script src="js/models/UserModel.js"></script>
-    <script src="js/models/CartModel.js"></script>
-    <script src="js/controllers/CartController.js"></script>
-    <script src="js/views/ProductsView.js"></script>
-    <script src="js/global.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9FwgsInMEb1_0lrFTFQ0mkjbzrDAsjLk",
+            authDomain: "naturallystunning.firebaseapp.com",
+            projectId: "naturallystunning",
+            storageBucket: "naturallystunning.firebasestorage.app",
+            messagingSenderId: "590111432564",
+            appId: "1:590111432564:web:8637bef1adff878a6a9621"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Cargar productos desde Products.js
+        const products = getAllProducts();
+        const grid = document.getElementById('products-grid');
+
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'producto-card';
+            card.innerHTML = `
+                <div class="producto-image">
+                    <img src="${product.image}" alt="${product.name}" onerror="this.src='img/placeholder.png'">
+                </div>
+                <div class="producto-info">
+                    <h3>${product.name}</h3>
+                    <p class="producto-descripcion">${product.description.substring(0, 100)}...</p>
+                    <div class="producto-footer">
+                        <span class="producto-precio">$${product.price.toFixed(2)} USD</span>
+                        <div style="display:flex;gap:10px;margin-top:10px;">
+                            <button class="btn-agregar" onclick="addToCart('${product.id}')">Agregar al carrito</button>
+                            <button class="btn" onclick="showModal('${product.id}')">Ver más</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Mostrar modal con toda la info
+        window.showModal = (id) => {
+            const product = getProductById(id);
+            const modal = document.getElementById('product-modal');
+            const modalBody = document.getElementById('modal-body');
+            
+            modalBody.innerHTML = `
+                <h2 style="color:#58655F;margin-bottom:20px;">${product.name}</h2>
+                <img src="${product.image}" style="width:100%;max-width:400px;margin:20px auto;display:block;border-radius:10px;" onerror="this.src='img/placeholder.png'">
+                
+                <div style="text-align:left;padding:20px;">
+                    <p style="margin:15px 0;"><strong>Categoría:</strong> ${product.category}</p>
+                    <p style="margin:15px 0;"><strong>Precio:</strong> <span style="color:#58655F;font-size:1.5rem;">$${product.price.toFixed(2)} USD</span></p>
+                    
+                    ${product.originalPrice ? `<p style="margin:15px 0;"><strong>Precio original:</strong> <s>$${product.originalPrice.toFixed(2)}</s></p>` : ''}
+                    
+                    <p style="margin:15px 0;"><strong>Descripción:</strong><br>${product.description}</p>
+                    
+                    ${product.benefits ? `
+                        <p style="margin:20px 0;"><strong>Beneficios:</strong></p>
+                        <ul style="margin-left:20px;line-height:1.8;">
+                            ${product.benefits.map(b => `<li>${b}</li>`).join('')}
+                        </ul>
+                    ` : ''}
+                    
+                    ${product.ingredients ? `
+                        <p style="margin:20px 0;"><strong>Ingredientes:</strong></p>
+                        <ul style="margin-left:20px;line-height:1.8;">
+                            ${product.ingredients.map(i => `<li>${i}</li>`).join('')}
+                        </ul>
+                    ` : ''}
+                    
+                    <p style="margin:15px 0;"><strong>Stock:</strong> ${product.stock} unidades disponibles</p>
+                    
+                    <button class="btn-agregar" style="width:100%;margin-top:30px;padding:15px;font-size:1.1rem;" onclick="addToCart('${product.id}');closeModal()">
+                        ✓ Agregar al Carrito - $${product.price.toFixed(2)} USD
+                    </button>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+        };
+
+        // Cerrar modal
+        window.closeModal = () => {
+            document.getElementById('product-modal').style.display = 'none';
+        };
+
+        document.getElementById('modal-close').onclick = closeModal;
+        
+        document.getElementById('product-modal').onclick = (e) => {
+            if (e.target.id === 'product-modal') closeModal();
+        };
+
+        // Agregar al carrito
+        window.addToCart = async (id) => {
+            const product = getProductById(id);
+            const user = auth.currentUser;
+            
+            if (!user) {
+                if(confirm('Debes iniciar sesión para agregar productos. ¿Ir a login?')) {
+                    window.location.href = 'login.html';
+                }
+                return;
+            }
+
+            try {
+                const cartRef = doc(db, "carts", user.uid);
+                const cartSnap = await getDoc(cartRef);
+                let cart = cartSnap.exists() ? cartSnap.data().items : [];
+                
+                const existingIndex = cart.findIndex(item => item.id === id);
+                if (existingIndex > -1) {
+                    cart[existingIndex].quantity += 1;
+                } else {
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                        quantity: 1
+                    });
+                }
+
+                await setDoc(cartRef, { 
+                    items: cart, 
+                    updatedAt: new Date().toISOString() 
+                });
+                
+                alert('✅ ¡Producto agregado al carrito!');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al agregar al carrito. Intenta de nuevo.');
+            }
+        };
+    </script>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 35px;
+            cursor: pointer;
+            color: #999;
+            z-index: 1;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 40px 20px;
+        }
+
+        .btn-agregar {
+            background: #EFCEEA;
+            color: #333;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-agregar:hover {
+            background: #FADE8D;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                padding: 25px;
+            }
+            
+            .productos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </body>
 </html>
