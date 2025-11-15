@@ -10,49 +10,70 @@
 <body>
 
     <input type="checkbox" id="menu-toggle" style="display: none;">
+
     <aside id="sidebar" class="sidebar">
-            </aside>
-    
-    <div id="content"> 
-        
-                <div id="topbar-placeholder"></div>
+        <ul>
+            <li><a href="profile.html">Mi cuenta</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="promos.html">Promos</a></li>
+            <li><a href="contactanos.html">Contáctanos</a></li>
+            <li><a href="AcercadeNosotros.html">Acerca de</a></li>
+        </ul>
+    </aside>
 
-        <section class="login-container">
-            <div class="login-card">
-                <div class="login-header">
-                    <h1>Bienvenido de Nuevo</h1>
-                    <p>Ingresa a tu cuenta de Naturally Stunning</p>
+    <div id="content" class="content">
+        <header>
+            <div class="topbar">
+                <label for="menu-toggle" class="menu-btn icon">☰</label>
+                <div class="icons">
+                    <a href="carrito.html" class="icon cart-icon">
+                        🛒
+                        <span class="cart-badge" id="cart-badge">0</span>
+                    </a>
+                    <a href="login.html" class="icon" id="profile-btn">👤</a>
+                </div>
+            </div>
+        </header>
+
+        <section class="login-section">
+            <div class="login-container">
+                <!-- Formulario de Login -->
+                <div class="form-wrapper" id="login-form-wrapper">
+                    <h2>Iniciar Sesión</h2>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <input type="email" id="login-email" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="login-password" placeholder="Contraseña" required>
+                        </div>
+                        <div class="error-message" id="login-error"></div>
+                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                        <p class="toggle-form">¿No tienes cuenta? <a href="#" id="show-register">Regístrate aquí</a></p>
+                    </form>
                 </div>
 
-                <form action="#" method="POST" class="login-form">
-                    <div class="form-group">
-                        <label for="email">Correo Electrónico</label>
-                        <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <input type="password" id="password" name="password" placeholder="••••••••" required>
-                    </div>
-
-                    <div class="form-options">
-                        <label class="remember-me">
-                            <input type="checkbox" name="remember">
-                            <span>Recordarme</span>
-                        </label>
-                        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-                    </div>
-
-                    <button type="submit" class="btn btn-login">Iniciar Sesión</button>
-                </form>
-
-                <div class="login-divider">
-                    <span>O</span>
-                </div>
-
-                <div class="register-prompt">
-                    <p>¿No tienes una cuenta?</p>
-                    <a href="register.html" class="btn btn-register">Crear Cuenta</a>
+                <!-- Formulario de Registro -->
+                <div class="form-wrapper hidden" id="register-form-wrapper">
+                    <h2>Crear Cuenta</h2>
+                    <form id="register-form">
+                        <div class="form-group">
+                            <input type="text" id="register-name" placeholder="Nombre completo" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="register-email" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="register-password" placeholder="Contraseña (mínimo 6 caracteres)" required minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="register-confirm-password" placeholder="Confirmar contraseña" required>
+                        </div>
+                        <div class="error-message" id="register-error"></div>
+                        <div class="success-message" id="register-success"></div>
+                        <button type="submit" class="btn btn-primary">Crear Cuenta</button>
+                        <p class="toggle-form">¿Ya tienes cuenta? <a href="#" id="show-login">Inicia sesión aquí</a></p>
+                    </form>
                 </div>
             </div>
         </section>
@@ -61,11 +82,10 @@
             <p>© 2025 Naturally Stunning - Todos los derechos reservados</p>
             <p>Creado por Laura Angel y Jorge Flores</p>
         </footer>
-    <script src="js/topbar_data.js"></script>
-    <script src="js/sidebar_data.js"></script> <script>
-        document.getElementById('topbar-placeholder').innerHTML = TOPBAR_HTML;
-        document.getElementById('sidebar').innerHTML = SIDEBAR_CONTENT;
-    </script>
+    </div>
 
+    <script src="js/models/UserModel.js"></script>
+    <script src="js/controllers/AuthController.js"></script>
+    <script src="js/views/LoginView.js"></script>
 </body>
 </html>
