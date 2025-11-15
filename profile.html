@@ -3,115 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Perfil - Naturally Stunning</title>
+    <title>Mi Cuenta - Naturally Stunning</title>
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
 
     <input type="checkbox" id="menu-toggle" style="display: none;">
+
     <aside id="sidebar" class="sidebar">
-            </aside>
-    
-    <div id="content"> 
-        
-                <div id="topbar-placeholder"></div>
+        <ul>
+            <li><a href="profile.html">Mi cuenta</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="promos.html">Promos</a></li>
+            <li><a href="contactanos.html">Contáctanos</a></li>
+            <li><a href="AcercadeNosotros.html">Acerca de</a></li>
+        </ul>
+    </aside>
 
-        <section class="profile-hero">
-            <h1>MI CUENTA</h1>
-            <p>Administra tu información y preferencias</p>
-        </section>
-
-        <section class="profile-container">
-            <div class="profile-sidebar">
-                <div class="profile-avatar">
-                    <div class="avatar-circle">👤</div>
-                    <h3>Usuario</h3>
-                    <p class="user-email">usuario@correo.com</p>
+    <div id="content" class="content">
+        <header>
+            <div class="topbar">
+                <label for="menu-toggle" class="menu-btn icon">☰</label>
+                <div class="icons">
+                    <a href="carrito.html" class="icon cart-icon">
+                        🛒
+                        <span class="cart-badge" id="cart-badge">0</span>
+                    </a>
+                    <a href="profile.html" class="icon" id="profile-btn">👤</a>
                 </div>
-
-                <nav class="profile-menu">
-                    <a href="#" class="menu-item active">
-                        <span class="menu-icon">👤</span>
-                        <span>Información Personal</span>
-                    </a>
-                    <a href="#" class="menu-item">
-                        <span class="menu-icon">📦</span>
-                        <span>Mis Pedidos</span>
-                    </a>
-                    <a href="#" class="menu-item">
-                        <span class="menu-icon">❤️</span>
-                        <span>Lista de Deseos</span>
-                    </a>
-                    <a href="#" class="menu-item">
-                        <span class="menu-icon">📍</span>
-                        <span>Direcciones</span>
-                    </a>
-                    <a href="index.html" class="menu-item logout">
-                        <span class="menu-icon">🚪</span>
-                        <span>Cerrar Sesión</span>
-                    </a>
-                </nav>
             </div>
+        </header>
 
-            <div class="profile-content">
-                <div class="content-header">
-                    <h2>Información Personal</h2>
-                    <button class="btn btn-edit">Editar Perfil</button>
+        <section class="profile-section">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <span id="user-initials">NS</span>
+                    </div>
+                    <h2 id="user-name-display">Cargando...</h2>
+                    <p id="user-email-display"></p>
                 </div>
 
-                <div class="info-grid">
-                    <div class="info-card">
-                        <label>Nombre Completo</label>
-                        <p>Usuario de Prueba</p>
-                    </div>
+                <div class="profile-tabs">
+                    <button class="tab-btn active" data-tab="info">Información Personal</button>
+                    <button class="tab-btn" data-tab="orders">Mis Pedidos</button>
+                </div>
 
-                    <div class="info-card">
-                        <label>Correo Electrónico</label>
-                        <p>usuario@correo.com</p>
-                    </div>
+                <!-- Tab: Información Personal -->
+                <div class="tab-content active" id="info-tab">
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label>Nombre Completo</label>
+                            <input type="text" id="profile-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="profile-email" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="tel" id="profile-phone" placeholder="+503 0000-0000">
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <textarea id="profile-address" rows="3" placeholder="Calle, colonia, ciudad..."></textarea>
+                        </div>
+                        <div class="success-message" id="profile-success"></div>
+                        <div class="error-message" id="profile-error"></div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
 
-                    <div class="info-card">
-                        <label>Teléfono</label>
-                        <p>+503 7777-8888</p>
-                    </div>
-
-                    <div class="info-card">
-                        <label>Fecha de Registro</label>
-                        <p>01 de Enero, 2025</p>
+                <!-- Tab: Mis Pedidos -->
+                <div class="tab-content" id="orders-tab">
+                    <div class="orders-empty">
+                        <p>📦 Aún no tienes pedidos</p>
+                        <a href="productos.html" class="btn btn-primary">Ir a Comprar</a>
                     </div>
                 </div>
 
-                <div class="orders-section">
-                    <h3>Pedidos Recientes</h3>
-                    <div class="orders-list">
-                        <div class="order-card">
-                            <div class="order-header">
-                                <span class="order-number">#12345</span>
-                                <span class="order-status status-completed">Completado</span>
-                            </div>
-                            <p class="order-date">15 de Diciembre, 2024</p>
-                            <p class="order-total">Total: $54.60 USD</p>
-                        </div>
-
-                        <div class="order-card">
-                            <div class="order-header">
-                                <span class="order-number">#12344</span>
-                                <span class="order-status status-shipping">En Camino</span>
-                            </div>
-                            <p class="order-date">20 de Diciembre, 2024</p>
-                            <p class="order-total">Total: $31.00 USD</p>
-                        </div>
-
-                        <div class="order-card">
-                            <div class="order-header">
-                                <span class="order-number">#12343</span>
-                                <span class="order-status status-completed">Completado</span>
-                            </div>
-                            <p class="order-date">10 de Noviembre, 2024</p>
-                            <p class="order-total">Total: $22.00 USD</p>
-                        </div>
-                    </div>
+                <div class="profile-actions">
+                    <button id="logout-btn" class="btn btn-secondary">Cerrar Sesión</button>
                 </div>
             </div>
         </section>
@@ -120,12 +93,10 @@
             <p>© 2025 Naturally Stunning - Todos los derechos reservados</p>
             <p>Creado por Laura Angel y Jorge Flores</p>
         </footer>
-        
-    <script src="js/topbar_data.js"></script>
-    <script src="js/sidebar_data.js"></script> <script>
-        document.getElementById('topbar-placeholder').innerHTML = TOPBAR_HTML;
-        document.getElementById('sidebar').innerHTML = SIDEBAR_CONTENT;
-    </script>
+    </div>
 
+    <script src="js/models/UserModel.js"></script>
+    <script src="js/controllers/AuthController.js"></script>
+    <script src="js/views/ProfileView.js"></script>
 </body>
 </html>
