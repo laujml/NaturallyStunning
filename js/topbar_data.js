@@ -8,18 +8,15 @@ const TOPBAR_HTML = `
         </div>
         
         <div class="topbar-center">
-            
             <div class="center-group">
                 <a href="index.html" class="nav-link">Inicio</a>
-                
                 <a href="productos.html" class="nav-link">Comprar</a>
             </div>
-            
         </div>
         
         <div class="topbar-right">
             <a href="carrito.html" class="icon-link">🛒</a>
-            <a href="perfil.html" class="icon-link">👤</a>
+            <a href="profile.html" class="icon-link">👤</a>
         </div>
         
     </nav>
