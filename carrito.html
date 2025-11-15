@@ -3,79 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compras - Naturally Stunning</title>
+    <title>Carrito - Naturally Stunning</title>
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/carrito.css">
 </head>
 <body>
 
     <input type="checkbox" id="menu-toggle" style="display: none;">
+
     <aside id="sidebar" class="sidebar">
-            </aside>
-    
-    <div id="content"> 
-        
-                <div id="topbar-placeholder"></div>
+        <ul>
+            <li><a href="profile.html">Mi cuenta</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="promos.html">Promos</a></li>
+            <li><a href="contactanos.html">Contáctanos</a></li>
+            <li><a href="AcercadeNosotros.html">Acerca de</a></li>
+        </ul>
+    </aside>
 
-        <section class="carrito-hero">
-            <h1>CARRITO DE COMPRAS</h1>
-            <p>Revisa tus productos antes de finalizar la compra</p>
-        </section>
-
-        <section class="carrito-container">
-            <div class="carrito-items">
-                <h2>Productos en tu carrito (1)</h2>
-
-                <!-- Producto agregado -->
-                <div class="carrito-item">
-                    <div class="item-image">
-                        <img src="img/productos/1.png" alt="Producto">
-                    </div>
-                    <div class="item-info">
-                        <h3>Producto agregado</h3>
-                        <p class="item-description">Este es un producto de ejemplo</p>
-                    </div>
-                    <div class="item-quantity">
-                        <label>Cantidad:</label>
-                        <input type="number" value="1" min="1" max="10">
-                    </div>
-                    <div class="item-price">
-                        <span class="price">$22.00</span>
-                        <button class="btn-remove">Eliminar</button>
-                    </div>
+    <div id="content" class="content">
+        <header>
+            <div class="topbar">
+                <label for="menu-toggle" class="menu-btn icon">☰</label>
+                <div class="icons">
+                    <a href="carrito.html" class="icon cart-icon">
+                        🛒
+                        <span class="cart-badge" id="cart-badge">0</span>
+                    </a>
+                    <a href="login.html" class="icon" id="profile-btn">👤</a>
                 </div>
-
             </div>
+        </header>
 
-            <!-- Resumen del pedido -->
-            <div class="carrito-summary">
-                <h3>Resumen del Pedido</h3>
-                
-                <div class="summary-line">
-                    <span>Subtotal:</span>
-                    <span>$22.00</span>
-                </div>
-                
-                <div class="summary-line">
-                    <span>Envío:</span>
-                    <span>$5.00</span>
-                </div>
-                
-                <div class="summary-divider"></div>
-                
-                <div class="summary-total">
-                    <span>TOTAL</span>
-                    <span class="total-price">$27.00 USD</span>
+        <section class="cart-section">
+            <div class="cart-container">
+                <h1>Mi Carrito</h1>
+
+                <!-- Carrito vacío -->
+                <div class="cart-empty" id="cart-empty" style="display: none;">
+                    <div class="empty-icon">🛒</div>
+                    <h3>Tu carrito está vacío</h3>
+                    <p>Agrega productos para comenzar tu compra</p>
+                    <a href="productos.html" class="btn btn-primary">Ver Productos</a>
                 </div>
 
-                <button class="btn-checkout">Proceder al Pago</button>
+                <!-- Carrito con items -->
+                <div class="cart-content" id="cart-content">
+                    <div class="cart-items" id="cart-items">
+                        <!-- Items se cargarán dinámicamente -->
+                    </div>
 
-                <div class="payment-methods">
-                    <p>Métodos de pago aceptados:</p>
-                    <div class="payment-icons">
-                        <span>💳</span>
-                        <span>🏦</span>
-                        <span>📱</span>
+                    <div class="cart-summary">
+                        <h3>Resumen del Pedido</h3>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Envío:</span>
+                            <span id="shipping">Gratis</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row summary-total">
+                            <span>Total:</span>
+                            <span id="total">$0.00</span>
+                        </div>
+                        <button class="btn btn-primary btn-checkout" id="checkout-btn">
+                            Proceder al Pago
+                        </button>
+                        <button class="btn btn-secondary" id="clear-cart-btn">
+                            Vaciar Carrito
+                        </button>
                     </div>
                 </div>
             </div>
@@ -85,11 +83,12 @@
             <p>© 2025 Naturally Stunning - Todos los derechos reservados</p>
             <p>Creado por Laura Angel y Jorge Flores</p>
         </footer>
-    <script src="js/topbar_data.js"></script>
-    <script src="js/sidebar_data.js"></script> <script>
-        document.getElementById('topbar-placeholder').innerHTML = TOPBAR_HTML;
-        document.getElementById('sidebar').innerHTML = SIDEBAR_CONTENT;
-    </script>
+    </div>
 
+    <script src="js/models/CartModel.js"></script>
+    <script src="js/models/UserModel.js"></script>
+    <script src="js/controllers/CartController.js"></script>
+    <script src="js/controllers/AuthController.js"></script>
+    <script src="js/views/CartView.js"></script>
 </body>
 </html>
