@@ -15,222 +15,144 @@
 /* ============================================
    1. CONTENEDOR PRINCIPAL
    ============================================ */
-.login-container {
-    min-height: calc(100vh - 200px);
+.login-section {
+    min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
-    background: #EAF7FF;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
-/* ============================================
-   2. CARD DE LOGIN
-   ============================================ */
-.login-card {
+.login-container {
     background: white;
-    padding: 50px 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     max-width: 450px;
     width: 100%;
+    padding: 40px;
 }
 
-.login-header {
+.form-wrapper {
+    animation: fadeIn 0.4s ease-in;
+}
+
+.form-wrapper.hidden {
+    display: none;
+}
+
+.form-wrapper h2 {
     text-align: center;
-    margin-bottom: 35px;
-}
-
-.login-header h1 {
-    font-size: 2rem;
-    color: #58655F;
-    margin-bottom: 10px;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.login-header p {
-    color: #666;
-    font-size: 0.95rem;
-}
-
-/* ============================================
-   3. FORMULARIO Y CAMPOS
-   ============================================ */
-.login-form {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 28px;
 }
 
 .form-group {
     margin-bottom: 20px;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #58655F;
-    font-weight: 500;
-    font-size: 0.9rem;
-}
-
 .form-group input {
     width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.3s;
     box-sizing: border-box;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #EFCEEA;
+    border-color: #8B7355;
 }
 
-/* ============================================
-   4. OPCIONES DEL FORMULARIO
-   ============================================ */
-.form-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    font-size: 0.85rem;
+.error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-bottom: 15px;
+    min-height: 20px;
 }
 
-.remember-me {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: #666;
+.success-message {
+    color: #27ae60;
+    font-size: 14px;
+    margin-bottom: 15px;
+    min-height: 20px;
 }
 
-.remember-me input[type="checkbox"] {
-    margin-right: 8px;
-    cursor: pointer;
-}
-
-.forgot-password {
-    color: #FF85B3;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.forgot-password:hover {
-    color: #FF577F;
-}
-
-/* ============================================
-   5. BOTONES
-   ============================================ */
-.btn-login {
+.btn-primary {
     width: 100%;
     padding: 14px;
-    background: #EFCEEA;
-    color: #333;
+    background-color: #8B7355;
+    color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 6px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(239, 206, 234, 0.4);
+    transition: background-color 0.3s;
+    margin-top: 10px;
 }
 
-.btn-login:hover {
-    background: #e6c56b;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(230, 197, 107, 0.5);
+.btn-primary:hover {
+    background-color: #6d5a44;
 }
 
-.btn-login:active {
-    transform: translateY(0);
-}
-
-/* ============================================
-   6. DIVIDER
-   ============================================ */
-.login-divider {
+.toggle-form {
     text-align: center;
-    margin: 25px 0;
+    margin-top: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+.toggle-form a {
+    color: #8B7355;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.toggle-form a:hover {
+    text-decoration: underline;
+}
+
+.cart-icon {
     position: relative;
 }
 
-.login-divider::before {
-    content: '';
+.cart-badge {
     position: absolute;
-    left: 0;
-    top: 50%;
-    width: 45%;
-    height: 1px;
-    background: #e0e0e0;
+    top: -8px;
+    right: -8px;
+    background: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
 }
 
-.login-divider::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    width: 45%;
-    height: 1px;
-    background: #e0e0e0;
-}
-
-.login-divider span {
-    background: white;
-    padding: 0 15px;
-    color: #999;
-    font-size: 0.85rem;
-}
-
-/* ============================================
-   7. REGISTRO PROMPT
-   ============================================ */
-.register-prompt {
-    text-align: center;
-}
-
-.register-prompt p {
-    color: #666;
-    margin-bottom: 15px;
-    font-size: 0.9rem;
-}
-
-.btn-register {
-    display: inline-block;
-    padding: 12px 30px;
-    background: white;
-    color: #58655F;
-    border: 2px solid #EFCEEA;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn-register:hover {
-    background: #EFCEEA;
-    color: #333;
-    transform: translateY(-2px);
-}
-
-/* ============================================
-   8. RESPONSIVE
-   ============================================ */
-@media (max-width: 580px) {
-    .login-card {
-        padding: 40px 25px;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
     }
-
-    .login-header h1 {
-        font-size: 1.6rem;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
+}
 
-    .form-options {
-        flex-direction: column;
-        gap: 12px;
-        align-items: flex-start;
+@media (max-width: 768px) {
+    .login-container {
+        padding: 30px 20px;
+    }
+    
+    .form-wrapper h2 {
+        font-size: 24px;
     }
 }
