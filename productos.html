@@ -9,90 +9,131 @@
 </head>
 <body>
 
-     <input type="checkbox" id="menu-toggle" style="display: none;">
+    <input type="checkbox" id="menu-toggle" style="display: none;">
+
     <aside id="sidebar" class="sidebar">
-            </aside>
-    
-    <div id="content"> 
-        
-                <div id="topbar-placeholder"></div>
-                
-        <section class="productos-hero">
-            <h1>NUESTROS PRODUCTOS</h1>
-            <p>Descubre nuestra selección de productos naturales para el cuidado de tu piel</p>
+        <ul>
+            <li><a href="profile.html">Mi cuenta</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="promos.html">Promos</a></li>
+            <li><a href="contactanos.html">Contáctanos</a></li>
+            <li><a href="AcercadeNosotros.html">Acerca de</a></li>
+        </ul>
+    </aside>
+
+    <div id="content" class="content">
+        <header>
+            <div class="topbar">
+                <label for="menu-toggle" class="menu-btn icon">☰</label>
+                <div class="icons">
+                    <a href="carrito.html" class="icon cart-icon">
+                        🛒
+                        <span class="cart-badge" id="cart-badge">0</span>
+                    </a>
+                    <a href="login.html" class="icon" id="profile-btn">👤</a>
+                </div>
+            </div>
+        </header>
+
+        <section class="products-hero">
+            <h1>Nuestros Productos</h1>
+            <p>Descubre nuestra colección completa de productos naturales para el cuidado de tu piel</p>
         </section>
 
-        <section class="productos-catalogo">
-            <div class="productos-grid">
-                
-                <div class="producto-card">
-                    <div class="producto-image">
-                        <img src="img/productos/1.png" alt="Desmaquillante de aceite de arroz">
+        <section class="products-section">
+            <div class="products-container">
+                <!-- Filtros y búsqueda -->
+                <aside class="filters-sidebar">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Buscar productos...">
+                        <button id="search-btn">🔍</button>
                     </div>
-                    <div class="producto-info">
-                        <h3>Desmaquillante de aceite de arroz</h3>
-                        <p class="producto-descripcion">Descubre el poder de los rituales ancestrales con nuestro limpiador ligero y vegano. Combina aceite de salvado de arroz y beta-glucano para disolver fácilmente el maquillaje y las impurezas.</p>
-                        <div class="producto-footer">
-                            <span class="producto-precio">$22.00 USD</span>
-                            <a href="carrito.html" class="btn-agregar">Agregar al carrito</a>
-                        </div>
+
+                    <div class="filter-group">
+                        <h3>Categorías</h3>
+                        <label class="filter-option">
+                            <input type="radio" name="category" value="all" checked>
+                            <span>Todos los productos</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="category" value="skincare">
+                            <span>Cuidado de la Piel</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="category" value="makeup">
+                            <span>Maquillaje</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="category" value="accessories">
+                            <span>Accesorios</span>
+                        </label>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Filtros</h3>
+                        <label class="filter-option">
+                            <input type="checkbox" id="filter-featured">
+                            <span>Destacados</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" id="filter-bestseller">
+                            <span>Best Sellers</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" id="filter-promotion">
+                            <span>En Promoción</span>
+                        </label>
+                    </div>
+
+                    <button class="btn btn-secondary" id="clear-filters">Limpiar Filtros</button>
+                </aside>
+
+                <!-- Grid de productos -->
+                <div class="products-main">
+                    <div class="products-header">
+                        <p class="products-count">Mostrando <span id="product-count">0</span> productos</p>
+                        <select id="sort-select">
+                            <option value="default">Ordenar por</option>
+                            <option value="name-asc">Nombre (A-Z)</option>
+                            <option value="name-desc">Nombre (Z-A)</option>
+                            <option value="price-asc">Precio (Menor a Mayor)</option>
+                            <option value="price-desc">Precio (Mayor a Menor)</option>
+                        </select>
+                    </div>
+
+                    <div class="products-grid" id="products-grid">
+                        <!-- Los productos se cargarán dinámicamente -->
+                    </div>
+
+                    <div class="no-results" id="no-results" style="display: none;">
+                        <p>😕 No se encontraron productos</p>
+                        <button class="btn btn-primary" id="reset-search">Ver todos los productos</button>
                     </div>
                 </div>
-
-                <div class="producto-card">
-                    <div class="producto-image">
-                        <img src="img/productos/2.png" alt="Diademas de spa ajustables">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Diademas de spa ajustables</h3>
-                        <p class="producto-descripcion">Mantén tu cabello perfectamente recogido durante tu rutina de cuidado facial. Suaves, cómodas y ajustables para todo tipo de cabello. Ideales para mascarillas y limpieza facial.</p>
-                        <div class="producto-footer">
-                            <span class="producto-precio">$5.00 USD</span>
-                            <a href="carrito.html" class="btn-agregar">Agregar al carrito</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="producto-card">
-                    <div class="producto-image">
-                        <img src="img/productos/3.png" alt="Aceite labial">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Aceite labial</h3>
-                        <p class="producto-descripcion">Nutrición intensa para labios suaves y saludables. Fórmula ligera con aceites naturales que hidratan profundamente sin sensación grasosa. Brillo natural y protección duradera.</p>
-                        <div class="producto-footer">
-                            <span class="producto-precio">$9.60 USD</span>
-                            <a href="carrito.html" class="btn-agregar">Agregar al carrito</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="producto-card">
-                    <div class="producto-image">
-                        <img src="img/productos/4.png" alt="Contorno en barra">
-                    </div>
-                    <div class="producto-info">
-                        <h3>Contorno en barra</h3>
-                        <p class="producto-descripcion">Define y esculpe tu rostro de forma natural con nuestra barra de contorno cremosa. Fácil aplicación y difuminado. Pigmentación perfecta para un acabado profesional todos los días.</p>
-                        <div class="producto-footer">
-                            <span class="producto-precio">$7.20 USD</span>
-                            <a href="carrito.html" class="btn-agregar">Agregar al carrito</a>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </section>
-        
+
         <footer>
             <p>© 2025 Naturally Stunning - Todos los derechos reservados</p>
             <p>Creado por Laura Angel y Jorge Flores</p>
         </footer>
-    <script src="js/topbar_data.js"></script>
-    <script src="js/sidebar_data.js"></script> <script>
-        document.getElementById('topbar-placeholder').innerHTML = TOPBAR_HTML;
-        document.getElementById('sidebar').innerHTML = SIDEBAR_CONTENT;
-    </script>
+    </div>
 
+    <!-- Modal de producto -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <div class="modal-body" id="modal-body">
+                <!-- Contenido del producto se cargará dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data/products.js"></script>
+    <script src="js/models/UserModel.js"></script>
+    <script src="js/models/CartModel.js"></script>
+    <script src="js/controllers/CartController.js"></script>
+    <script src="js/views/ProductsView.js"></script>
+    <script src="js/global.js"></script>
 </body>
 </html>
