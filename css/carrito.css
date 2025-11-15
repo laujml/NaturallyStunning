@@ -13,68 +13,97 @@
 /* ============================================
    1. HERO DEL CARRITO
    ============================================ */
-.carrito-hero {
-    background: #EAF7FF;
-    padding: 80px 20px;
-    text-align: center;
-    color: #58655F;
+.cart-section {
+    min-height: 80vh;
+    padding: 40px 20px;
+    background: #f5f5f5;
 }
 
-.carrito-hero h1 {
-    font-size: 3rem;
-    margin-bottom: 15px;
-    letter-spacing: 2px;
-    font-weight: 300;
-    text-transform: uppercase;
-}
-
-.carrito-hero p {
-    font-size: 1.2rem;
-    opacity: 0.9;
-}
-
-/* ============================================
-   2. LAYOUT PRINCIPAL
-   ============================================ */
-.carrito-container {
-    display: flex;
+.cart-container {
     max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
+    margin: 0 auto;
+}
+
+.cart-container h1 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.cart-icon {
+    position: relative;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.cart-empty {
+    text-align: center;
+    padding: 80px 20px;
+    background: white;
+    border-radius: 12px;
+}
+
+.empty-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.cart-empty h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.cart-empty p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.cart-content {
+    display: grid;
+    grid-template-columns: 1fr 350px;
     gap: 30px;
 }
 
-.carrito-items {
-    flex: 1;
+.cart-items {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
 }
 
-.carrito-items h2 {
-    color: #58655F;
-    font-size: 1.8rem;
-    margin-bottom: 25px;
-    font-weight: 400;
-}
-
-/* ============================================
-   3. ITEMS DEL CARRITO
-   ============================================ */
-.carrito-item {
+.cart-item {
     display: flex;
     gap: 20px;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #e0e0e0;
+    animation: fadeIn 0.3s;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
 }
 
 .item-image {
-    flex: 0 0 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     border-radius: 8px;
     overflow: hidden;
-    background: #f9f9f9;
+    flex-shrink: 0;
 }
 
 .item-image img {
@@ -83,209 +112,172 @@
     object-fit: cover;
 }
 
-.item-info {
-    flex: 1;
+.item-details {
+    flex-grow: 1;
 }
 
-.item-info h3 {
-    color: #58655F;
-    font-size: 1.2rem;
+.item-details h3 {
+    font-size: 18px;
     margin-bottom: 8px;
-    font-weight: 500;
+    color: #333;
 }
 
-.item-description {
-    color: #999;
-    font-size: 0.9rem;
-    line-height: 1.4;
+.item-price {
+    color: #8B7355;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
 }
 
 .item-quantity {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 8px;
-}
-
-.item-quantity label {
-    color: #666;
-    font-size: 0.85rem;
-}
-
-.item-quantity input {
-    width: 60px;
-    padding: 8px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 1rem;
-}
-
-.item-price {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     gap: 10px;
 }
 
-.item-price .price {
-    color: #58655F;
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-.btn-remove {
-    background: none;
-    border: none;
-    color: #FF577F;
-    font-size: 0.85rem;
-    cursor: pointer;
-    text-decoration: underline;
-    transition: color 0.3s ease;
-}
-
-.btn-remove:hover {
-    color: #FF2D5F;
-}
-
-/* ============================================
-   4. RESUMEN DEL PEDIDO
-   ============================================ */
-.carrito-summary {
-    flex: 0 0 350px;
+.quantity-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ddd;
     background: white;
-    padding: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.quantity-btn:hover {
+    background: #f5f5f5;
+    border-color: #8B7355;
+}
+
+.quantity-input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 6px;
+}
+
+.item-actions {
+    display: flex;
+    align-items: center;
+}
+
+.remove-btn {
+    color: #e74c3c;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 10px;
+    transition: transform 0.2s;
+}
+
+.remove-btn:hover {
+    transform: scale(1.2);
+}
+
+.cart-summary {
+    background: white;
     border-radius: 12px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    padding: 25px;
     height: fit-content;
     position: sticky;
     top: 20px;
 }
 
-.carrito-summary h3 {
-    color: #58655F;
-    font-size: 1.5rem;
-    margin-bottom: 25px;
-    font-weight: 400;
+.cart-summary h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #333;
 }
 
-.summary-line {
+.summary-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     color: #666;
-    font-size: 1rem;
+    font-size: 15px;
 }
 
 .summary-divider {
-    height: 2px;
-    background: #f0f0f0;
+    height: 1px;
+    background: #e0e0e0;
     margin: 20px 0;
 }
 
 .summary-total {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 25px;
-    font-size: 1.2rem;
+    font-size: 20px;
     font-weight: 600;
-    color: #58655F;
-}
-
-.total-price {
-    font-size: 2.2rem;
-    color: #FF577F;
-    font-weight: 700;
-}
-
-/* ============================================
-   5. BOTÓN DE CHECKOUT
-   ============================================ */
-.btn-checkout {
-    width: 100%;
-    padding: 16px;
-    background: #EFCEEA;
     color: #333;
+}
+
+.btn {
+    width: 100%;
+    padding: 14px;
     border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    border-radius: 6px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(239, 206, 234, 0.4);
+    transition: all 0.3s;
+    margin-top: 15px;
 }
 
-.btn-checkout:hover {
-    background: #e6c56b;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(230, 197, 107, 0.5);
+.btn-primary {
+    background-color: #8B7355;
+    color: white;
 }
 
-/* ============================================
-   6. MÉTODOS DE PAGO
-   ============================================ */
-.payment-methods {
-    text-align: center;
-    padding-top: 20px;
-    border-top: 2px solid #f0f0f0;
+.btn-primary:hover {
+    background-color: #6d5a44;
 }
 
-.payment-methods p {
-    color: #999;
-    font-size: 0.85rem;
-    margin-bottom: 10px;
+.btn-secondary {
+    background-color: #e0e0e0;
+    color: #666;
 }
 
-.payment-icons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    font-size: 2rem;
+.btn-secondary:hover {
+    background-color: #d0d0d0;
 }
 
-/* ============================================
-   7. RESPONSIVE DESIGN
-   ============================================ */
-@media (max-width: 968px) {
-    .carrito-container {
-        flex-direction: column;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
     }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-    .carrito-summary {
-        flex: none;
-        width: 100%;
+@media (max-width: 968px) {
+    .cart-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .cart-summary {
         position: static;
     }
-
-    .carrito-item {
-        flex-wrap: wrap;
-    }
-
-    .item-image {
-        flex: 0 0 100px;
-        height: 100px;
-    }
-
-    .item-quantity,
-    .item-price {
-        flex: 0 0 100%;
-        flex-direction: row;
-        justify-content: space-between;
-        margin-top: 15px;
-    }
 }
 
-@media (max-width: 580px) {
-    .carrito-hero h1 {
-        font-size: 2.2rem;
+@media (max-width: 600px) {
+    .cart-item {
+        flex-direction: column;
     }
-
-    .carrito-item {
-        padding: 15px;
+    
+    .item-image {
+        width: 100%;
+        height: 200px;
     }
-
-    .item-info h3 {
-        font-size: 1rem;
+    
+    .item-actions {
+        justify-content: flex-end;
     }
 }
