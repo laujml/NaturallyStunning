@@ -6,6 +6,9 @@
     <title>Productos - Naturally Stunning</title>
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/productos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <input type="checkbox" id="menu-toggle" style="display: none;">
@@ -21,12 +24,12 @@
 
         <section class="productos-catalogo">
             <div class="productos-grid" id="products-grid">
-                <!-- Los productos se cargan aquí -->
+                <!-- Los productos se cargan aquí dinámicamente -->
             </div>
         </section>
 
-        <!-- MODAL -->
-        <div id="product-modal" class="modal" style="display:none;">
+        <!-- MODAL DE DETALLES -->
+        <div id="product-modal" class="modal">
             <div class="modal-content">
                 <span class="modal-close" id="modal-close">&times;</span>
                 <div class="modal-body" id="modal-body"></div>
@@ -68,90 +71,165 @@
         // Cargar productos desde Products.js
         const products = getAllProducts();
         const grid = document.getElementById('products-grid');
+        const modal = document.getElementById('product-modal');
+        const modalBody = document.getElementById('modal-body');
+        const modalClose = document.getElementById('modal-close');
 
+        console.log('📦 Cargando', products.length, 'productos...');
+
+        // Renderizar todos los productos
         products.forEach(product => {
             const card = document.createElement('div');
             card.className = 'producto-card';
+            
+            const categoryNames = {
+                'skincare': 'Cuidado de la Piel',
+                'makeup': 'Maquillaje',
+                'accessories': 'Accesorios'
+            };
+            
             card.innerHTML = `
                 <div class="producto-image">
                     <img src="${product.image}" alt="${product.name}" onerror="this.src='img/placeholder.png'">
                 </div>
                 <div class="producto-info">
                     <h3>${product.name}</h3>
-                    <p class="producto-descripcion">${product.description.substring(0, 100)}...</p>
+                    <p class="producto-descripcion">${product.description.substring(0, 120)}...</p>
                     <div class="producto-footer">
                         <span class="producto-precio">$${product.price.toFixed(2)} USD</span>
-                        <div style="display:flex;gap:10px;margin-top:10px;">
-                            <button class="btn-agregar" onclick="addToCart('${product.id}')">Agregar al carrito</button>
-                            <button class="btn" onclick="showModal('${product.id}')">Ver más</button>
+                        <div style="display:flex;gap:10px;justify-content:space-between;">
+                            <button class="btn btn-agregar" onclick="addToCart('${product.id}')">
+                                🛒 Agregar
+                            </button>
+                            <button class="btn btn-ver" onclick="showModal('${product.id}')">
+                                👁️ Ver más
+                            </button>
                         </div>
                     </div>
                 </div>
             `;
+            
             grid.appendChild(card);
         });
 
-        // Mostrar modal con toda la info
+        console.log('✅ Productos renderizados');
+
+        // Función para mostrar modal con detalles completos
         window.showModal = (id) => {
             const product = getProductById(id);
-            const modal = document.getElementById('product-modal');
-            const modalBody = document.getElementById('modal-body');
+            if (!product) {
+                console.error('Producto no encontrado:', id);
+                return;
+            }
+            
+            console.log('📄 Mostrando modal para:', product.name);
+            
+            const categoryNames = {
+                'skincare': 'Cuidado de la Piel',
+                'makeup': 'Maquillaje',
+                'accessories': 'Accesorios'
+            };
             
             modalBody.innerHTML = `
-                <h2 style="color:#58655F;margin-bottom:20px;">${product.name}</h2>
-                <img src="${product.image}" style="width:100%;max-width:400px;margin:20px auto;display:block;border-radius:10px;" onerror="this.src='img/placeholder.png'">
+                <h2>${product.name}</h2>
+                <img src="${product.image}" alt="${product.name}" onerror="this.src='img/placeholder.png'">
                 
-                <div style="text-align:left;padding:20px;">
-                    <p style="margin:15px 0;"><strong>Categoría:</strong> ${product.category}</p>
-                    <p style="margin:15px 0;"><strong>Precio:</strong> <span style="color:#58655F;font-size:1.5rem;">$${product.price.toFixed(2)} USD</span></p>
+                <div class="modal-details">
+                    <p><strong>Categoría:</strong> ${categoryNames[product.category] || product.category}</p>
                     
-                    ${product.originalPrice ? `<p style="margin:15px 0;"><strong>Precio original:</strong> <s>$${product.originalPrice.toFixed(2)}</s></p>` : ''}
+                    <p><strong>Precio:</strong> <span class="modal-price">$${product.price.toFixed(2)} USD</span></p>
                     
-                    <p style="margin:15px 0;"><strong>Descripción:</strong><br>${product.description}</p>
+                    ${product.originalPrice ? 
+                        `<p><strong>Precio original:</strong> <s style="color:#999;">$${product.originalPrice.toFixed(2)} USD</s> 
+                        <span style="color:#e74c3c;font-weight:600;margin-left:10px;">
+                            ¡Ahorra ${Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%!
+                        </span></p>` 
+                        : ''}
                     
-                    ${product.benefits ? `
-                        <p style="margin:20px 0;"><strong>Beneficios:</strong></p>
-                        <ul style="margin-left:20px;line-height:1.8;">
-                            ${product.benefits.map(b => `<li>${b}</li>`).join('')}
+                    <p><strong>Descripción:</strong><br>${product.description}</p>
+                    
+                    ${product.benefits && product.benefits.length > 0 ? `
+                        <p style="margin-top:20px;"><strong>Beneficios:</strong></p>
+                        <ul>
+                            ${product.benefits.map(b => `<li>✓ ${b}</li>`).join('')}
                         </ul>
                     ` : ''}
                     
-                    ${product.ingredients ? `
-                        <p style="margin:20px 0;"><strong>Ingredientes:</strong></p>
-                        <ul style="margin-left:20px;line-height:1.8;">
-                            ${product.ingredients.map(i => `<li>${i}</li>`).join('')}
+                    ${product.ingredients && product.ingredients.length > 0 ? `
+                        <p style="margin-top:20px;"><strong>Ingredientes principales:</strong></p>
+                        <ul>
+                            ${product.ingredients.map(i => `<li>🌿 ${i}</li>`).join('')}
                         </ul>
                     ` : ''}
                     
-                    <p style="margin:15px 0;"><strong>Stock:</strong> ${product.stock} unidades disponibles</p>
+                    ${product.colors && product.colors.length > 0 ? `
+                        <p style="margin-top:20px;"><strong>Colores disponibles:</strong> ${product.colors.join(', ')}</p>
+                    ` : ''}
                     
-                    <button class="btn-agregar" style="width:100%;margin-top:30px;padding:15px;font-size:1.1rem;" onclick="addToCart('${product.id}');closeModal()">
-                        ✓ Agregar al Carrito - $${product.price.toFixed(2)} USD
+                    <p style="margin-top:20px;"><strong>Disponibilidad:</strong> 
+                        ${product.stock > 0 ? 
+                            `<span style="color:#27ae60;">✓ ${product.stock} unidades en stock</span>` : 
+                            `<span style="color:#e74c3c;">✗ Agotado</span>`}
+                    </p>
+                    
+                    ${product.featured ? '<p style="color:#f39c12;font-weight:600;">⭐ Producto Destacado</p>' : ''}
+                    ${product.bestSeller ? '<p style="color:#27ae60;font-weight:600;">🏆 Best Seller</p>' : ''}
+                    ${product.bundle ? '<p style="color:#3498db;font-weight:600;">📦 Set Completo</p>' : ''}
+                    
+                    <button class="btn btn-agregar" 
+                            style="width:100%;margin-top:30px;padding:15px;font-size:1.1rem;"
+                            onclick="addToCart('${product.id}'); closeModal();"
+                            ${product.stock <= 0 ? 'disabled' : ''}>
+                        ${product.stock > 0 ? 
+                            `✓ Agregar al Carrito - $${product.price.toFixed(2)} USD` : 
+                            'Producto Agotado'}
                     </button>
                 </div>
             `;
             
             modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         };
 
-        // Cerrar modal
+        // Función para cerrar modal
         window.closeModal = () => {
-            document.getElementById('product-modal').style.display = 'none';
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
         };
 
-        document.getElementById('modal-close').onclick = closeModal;
+        // Event listeners para cerrar modal
+        modalClose.onclick = closeModal;
         
-        document.getElementById('product-modal').onclick = (e) => {
-            if (e.target.id === 'product-modal') closeModal();
+        modal.onclick = (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
         };
 
-        // Agregar al carrito
+        // Cerrar con ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                closeModal();
+            }
+        });
+
+        // Función para agregar al carrito
         window.addToCart = async (id) => {
             const product = getProductById(id);
+            if (!product) {
+                alert('❌ Producto no encontrado');
+                return;
+            }
+
+            if (product.stock <= 0) {
+                alert('❌ Este producto está agotado');
+                return;
+            }
+            
             const user = auth.currentUser;
             
             if (!user) {
-                if(confirm('Debes iniciar sesión para agregar productos. ¿Ir a login?')) {
+                if (confirm('Debes iniciar sesión para agregar productos al carrito.\n\n¿Ir a la página de login?')) {
                     window.location.href = 'login.html';
                 }
                 return;
@@ -160,10 +238,16 @@
             try {
                 const cartRef = doc(db, "carts", user.uid);
                 const cartSnap = await getDoc(cartRef);
-                let cart = cartSnap.exists() ? cartSnap.data().items : [];
+                let cart = cartSnap.exists() ? cartSnap.data().items || [] : [];
                 
                 const existingIndex = cart.findIndex(item => item.id === id);
+                
                 if (existingIndex > -1) {
+                    // Verificar stock antes de incrementar
+                    if (cart[existingIndex].quantity >= product.stock) {
+                        alert(`❌ No hay más stock disponible (máximo: ${product.stock} unidades)`);
+                        return;
+                    }
                     cart[existingIndex].quantity += 1;
                 } else {
                     cart.push({
@@ -171,7 +255,8 @@
                         name: product.name,
                         price: product.price,
                         image: product.image,
-                        quantity: 1
+                        quantity: 1,
+                        category: product.category
                     });
                 }
 
@@ -180,89 +265,54 @@
                     updatedAt: new Date().toISOString() 
                 });
                 
-                alert('✅ ¡Producto agregado al carrito!');
+                showNotification(`✅ ${product.name} agregado al carrito`);
+                
             } catch (error) {
-                console.error('Error:', error);
-                alert('❌ Error al agregar al carrito. Intenta de nuevo.');
+                console.error('Error al agregar al carrito:', error);
+                alert('❌ Error al agregar al carrito. Por favor intenta de nuevo.');
             }
         };
+
+        // Función para mostrar notificación
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: #27ae60;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                font-weight: 600;
+                z-index: 10000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Agregar estilos de animación
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(400px); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(400px); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        console.log(' Página de productos lista');
     </script>
-
-    <style>
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 15px;
-            max-width: 800px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            padding: 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            font-size: 35px;
-            cursor: pointer;
-            color: #999;
-            z-index: 1;
-            line-height: 1;
-        }
-
-        .modal-close:hover {
-            color: #333;
-        }
-
-        .productos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 40px 20px;
-        }
-
-        .btn-agregar {
-            background: #EFCEEA;
-            color: #333;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .btn-agregar:hover {
-            background: #FADE8D;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        @media (max-width: 768px) {
-            .modal-content {
-                padding: 25px;
-            }
-            
-            .productos-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
 </body>
 </html>
