@@ -8,87 +8,160 @@
     <link rel="stylesheet" href="css/carrito.css">
 </head>
 <body>
-
     <input type="checkbox" id="menu-toggle" style="display: none;">
+    <aside id="sidebar" class="sidebar"></aside>
+    
+    <div id="content"> 
+        <div id="topbar-placeholder"></div>
 
-    <aside id="sidebar" class="sidebar">
-        <ul>
-            <li><a href="profile.html">Mi cuenta</a></li>
-            <li><a href="productos.html">Productos</a></li>
-            <li><a href="promos.html">Promos</a></li>
-            <li><a href="contactanos.html">Contáctanos</a></li>
-            <li><a href="AcercadeNosotros.html">Acerca de</a></li>
-        </ul>
-    </aside>
+        <section class="carrito-hero">
+            <h1>CARRITO DE COMPRAS</h1>
+            <p>Revisa tus productos</p>
+        </section>
 
-    <div id="content" class="content">
-        <header>
-            <div class="topbar">
-                <label for="menu-toggle" class="menu-btn icon">☰</label>
-                <div class="icons">
-                    <a href="carrito.html" class="icon cart-icon">
-                        🛒
-                        <span class="cart-badge" id="cart-badge">0</span>
-                    </a>
-                    <a href="login.html" class="icon" id="profile-btn">👤</a>
-                </div>
+        <section class="carrito-container">
+            <div class="carrito-items">
+                <h2>Productos (<span id="items-count">0</span>)</h2>
+                <div id="cart-items"></div>
             </div>
-        </header>
 
-        <section class="cart-section">
-            <div class="cart-container">
-                <h1>Mi Carrito</h1>
-
-                <!-- Carrito vacío -->
-                <div class="cart-empty" id="cart-empty" style="display: none;">
-                    <div class="empty-icon">🛒</div>
-                    <h3>Tu carrito está vacío</h3>
-                    <p>Agrega productos para comenzar tu compra</p>
-                    <a href="productos.html" class="btn btn-primary">Ver Productos</a>
+            <div class="carrito-summary">
+                <h3>Resumen</h3>
+                <div class="summary-line">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0.00</span>
                 </div>
-
-                <!-- Carrito con items -->
-                <div class="cart-content" id="cart-content">
-                    <div class="cart-items" id="cart-items">
-                        <!-- Items se cargarán dinámicamente -->
-                    </div>
-
-                    <div class="cart-summary">
-                        <h3>Resumen del Pedido</h3>
-                        <div class="summary-row">
-                            <span>Subtotal:</span>
-                            <span id="subtotal">$0.00</span>
-                        </div>
-                        <div class="summary-row">
-                            <span>Envío:</span>
-                            <span id="shipping">Gratis</span>
-                        </div>
-                        <div class="summary-divider"></div>
-                        <div class="summary-row summary-total">
-                            <span>Total:</span>
-                            <span id="total">$0.00</span>
-                        </div>
-                        <button class="btn btn-primary btn-checkout" id="checkout-btn">
-                            Proceder al Pago
-                        </button>
-                        <button class="btn btn-secondary" id="clear-cart-btn">
-                            Vaciar Carrito
-                        </button>
-                    </div>
+                <div class="summary-line">
+                    <span>Envío:</span>
+                    <span>$5.00</span>
                 </div>
+                <div class="summary-divider"></div>
+                <div class="summary-total">
+                    <span>TOTAL</span>
+                    <span id="total">$5.00</span>
+                </div>
+                <button class="btn-checkout" onclick="checkout()">Pagar</button>
             </div>
         </section>
 
         <footer>
-            <p>© 2025 Naturally Stunning - Todos los derechos reservados</p>
-            <p>Creado por Laura Angel y Jorge Flores</p>
+            <p>© 2025 Naturally Stunning</p>
         </footer>
     </div>
 
-    <script src="js/models/CartModel.js"></script>
-    <script src="js/models/UserModel.js"></script>
-    <script src="js/controllers/CartController.js"></script>
-    <script src="js/controllers/AuthController.js"></script>
-    <script src="js/views/CartView.js"></script>
+    <script src="js/topbar_data.js"></script>
+    <script src="js/sidebar_data.js"></script>
+    <script>
+        document.getElementById('topbar-placeholder').innerHTML = TOPBAR_HTML;
+        document.getElementById('sidebar').innerHTML = SIDEBAR_CONTENT;
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9FwgsInMEb1_0lrFTFQ0mkjbzrDAsjLk",
+            authDomain: "naturallystunning.firebaseapp.com",
+            projectId: "naturallystunning",
+            storageBucket: "naturallystunning.firebasestorage.app",
+            messagingSenderId: "590111432564",
+            appId: "1:590111432564:web:8637bef1adff878a6a9621"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let cartListener = null;
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const cartRef = doc(db, "carts", user.uid);
+            cartListener = onSnapshot(cartRef, (docSnap) => {
+                const cart = docSnap.exists() ? docSnap.data().items : [];
+                renderCart(cart);
+            });
+        });
+
+        function renderCart(cart) {
+            const container = document.getElementById('cart-items');
+            const count = document.getElementById('items-count');
+            const subtotalEl = document.getElementById('subtotal');
+            const totalEl = document.getElementById('total');
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align:center;padding:40px;">Carrito vacío</p>';
+                count.textContent = '0';
+                subtotalEl.textContent = '$0.00';
+                totalEl.textContent = '$5.00';
+                return;
+            }
+
+            let subtotal = 0;
+            container.innerHTML = '';
+            count.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+                const div = document.createElement('div');
+                div.className = 'carrito-item';
+                div.innerHTML = `
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="item-info">
+                        <h3>${item.name}</h3>
+                        <p class="item-price">$${item.price.toFixed(2)}</p>
+                    </div>
+                    <div class="item-quantity">
+                        <label>Cantidad:</label>
+                        <input type="number" value="${item.quantity}" min="1" onchange="updateQty('${item.id}', this.value)">
+                    </div>
+                    <div class="item-actions">
+                        <span class="item-price">$${(item.price * item.quantity).toFixed(2)}</span>
+                        <button class="btn-remove" onclick="removeItem('${item.id}')">Eliminar</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+            totalEl.textContent = `$${(subtotal + 5).toFixed(2)}`;
+        }
+
+        window.updateQty = async (id, qty) => {
+            const user = auth.currentUser;
+            const cartRef = doc(db, "carts", user.uid);
+            const cartSnap = await getDoc(cartRef);
+            let cart = cartSnap.data().items;
+            
+            const index = cart.findIndex(item => item.id === id);
+            cart[index].quantity = parseInt(qty);
+            
+            await setDoc(cartRef, { items: cart, updatedAt: new Date().toISOString() });
+        };
+
+        window.removeItem = async (id) => {
+            const user = auth.currentUser;
+            const cartRef = doc(db, "carts", user.uid);
+            const cartSnap = await getDoc(cartRef);
+            let cart = cartSnap.data().items.filter(item => item.id !== id);
+            
+            await setDoc(cartRef, { items: cart, updatedAt: new Date().toISOString() });
+        };
+
+        window.checkout = async () => {
+            const user = auth.currentUser;
+            const cartRef = doc(db, "carts", user.uid);
+            await setDoc(cartRef, { items: [], updatedAt: new Date().toISOString() });
+            alert('¡Compra realizada con éxito!');
+        };
+    </script>
 </body>
 </html>
