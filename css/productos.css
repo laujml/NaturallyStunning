@@ -1,174 +1,309 @@
-/* productos.css - GRID RESPONSIVO 3-2-1 */
-.products-grid {
+/* ================================================
+   PRODUCTOS.CSS - Naturally Stunning
+   ================================================
+   Catálogo de productos con grid responsivo
+================================================ */
+
+/* ------------------------------------------------
+   1. HERO SECTION
+------------------------------------------------ */
+.productos-hero {
+    background: linear-gradient(135deg, #EFCEEA 0%, #FADE8D 100%);
+    text-align: center;
+    padding: 80px 20px;
+    color: #fff;
+}
+
+.productos-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.productos-hero p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+/* ------------------------------------------------
+   2. CATÁLOGO - GRID DE PRODUCTOS
+------------------------------------------------ */
+.productos-catalogo {
+    padding: 60px 20px;
+    background: #f9f9f9;
+}
+
+.productos-grid {
     display: grid;
-    gap: 24px;
-    padding: 16px;
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
     max-width: 1400px;
+    margin: 0 auto;
 }
 
-/* 3 columnas: Desktop y tablets grandes */
-@media (min-width: 992px) {
-    .products-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-/* 2 columnas: Tablets pequeñas */
-@media (min-width: 600px) and (max-width: 991px) {
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* 1 columna: Móviles */
-@media (max-width: 599px) {
-    .products-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Estilos de tarjeta */
-.product-card {
+/* ------------------------------------------------
+   3. TARJETA DE PRODUCTO
+------------------------------------------------ */
+.producto-card {
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
     cursor: pointer;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    text-decoration: none;
-    color: inherit;
+    height: 100%;
 }
 
-.product-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+.producto-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
-.product-image {
-    position: relative;
-    height: 220px;
+/* Imagen del producto */
+.producto-image {
+    width: 100%;
+    height: 250px;
     overflow: hidden;
+    background: #f5f5f5;
+    position: relative;
 }
 
-.product-image img {
+.producto-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s;
 }
 
-.product-card:hover .product-image img {
+.producto-card:hover .producto-image img {
     transform: scale(1.05);
 }
 
-.product-info {
-    padding: 16px;
+/* Información del producto */
+.producto-info {
+    padding: 20px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
-.product-category {
-    font-size: 0.8rem;
-    color: #8B7355;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-bottom: 6px;
-}
-
-.product-name {
-    font-size: 1.1rem;
-    margin: 0 0 8px;
+.producto-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 10px;
     line-height: 1.3;
+}
+
+.producto-descripcion {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+/* Footer de la tarjeta */
+.producto-footer {
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.producto-precio {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #58655F;
+    display: block;
+    margin-bottom: 15px;
+}
+
+/* ------------------------------------------------
+   4. BOTONES
+------------------------------------------------ */
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.btn-agregar {
+    background: #EFCEEA;
+    color: #333;
+    width: 48%;
+}
+
+.btn-agregar:hover {
+    background: #FADE8D;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-ver {
+    background: #fff;
+    color: #58655F;
+    border: 2px solid #EFCEEA;
+    width: 48%;
+}
+
+.btn-ver:hover {
+    background: #EFCEEA;
+    border-color: #FADE8D;
+}
+
+/* ------------------------------------------------
+   5. MODAL DE PRODUCTO
+------------------------------------------------ */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 15px;
+    max-width: 900px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 35px;
+    cursor: pointer;
+    color: #999;
+    z-index: 1;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
     color: #333;
 }
 
-.product-price {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
+.modal-body {
+    text-align: center;
 }
 
-.price-current {
+.modal-body h2 {
+    font-family: 'Cormorant Garamond', serif;
+    color: #58655F;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.modal-body img {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    display: block;
+    border-radius: 10px;
+}
+
+.modal-details {
+    text-align: left;
+    padding: 20px;
+}
+
+.modal-details p {
+    margin: 15px 0;
+    line-height: 1.7;
+}
+
+.modal-details strong {
+    color: #58655F;
+}
+
+.modal-price {
+    color: #58655F;
+    font-size: 1.8rem;
     font-weight: 600;
-    color: #8B7355;
-    font-size: 1.1rem;
 }
 
-.price-original {
-    text-decoration: line-through;
-    color: #999;
-    font-size: 0.9rem;
+.modal-details ul {
+    margin-left: 20px;
+    line-height: 1.8;
 }
 
-.product-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: auto;
+.modal-details ul li {
+    margin: 8px 0;
 }
 
-.btn {
-    padding: 10px 14px;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
+/* ------------------------------------------------
+   6. RESPONSIVE
+------------------------------------------------ */
+@media (max-width: 992px) {
+    .productos-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
 }
 
-.btn-primary {
-    background: #8B7355;
-    color: white;
-    flex: 1;
+@media (max-width: 768px) {
+    .productos-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .productos-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        padding: 25px;
+        width: 95%;
+    }
+    
+    .btn-agregar,
+    .btn-ver {
+        width: 100%;
+        margin-bottom: 10px;
+    }
 }
 
-.btn-primary:hover {
-    background: #6d5a44;
-}
-
-.btn-icon {
-    background: #f0f0f0;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-}
-
-.btn-icon:hover {
-    background: #e0e0e0;
-}
-
-.product-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: #e74c3c;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: bold;
-    padding: 4px 8px;
-    border-radius: 4px;
-    z-index: 2;
-}
-
-.product-badge.featured { background: #27ae60; }
-.product-badge.bestseller { background: #f39c12; }
-
-/* Notificación */
-@keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-@keyframes slideOut {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(100%); opacity: 0; }
+@media (max-width: 480px) {
+    .producto-image {
+        height: 200px;
+    }
+    
+    .productos-hero {
+        padding: 50px 15px;
+    }
 }
